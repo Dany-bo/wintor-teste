@@ -1,0 +1,136 @@
+{
+  "modulo": {
+    "nome": "COBRANÇA MAGNÉTICA",
+    "codigo_modulo": 15,
+    "descricao_geral": "Módulo de Cobrança Magnética do WinThor. Gerencia a geração de arquivos de remessa e processamento de retorno bancário (CNAB 400 e 240), boletos bancários, custódia de cheques, baixa automática de vendas por cartão, relatórios de títulos descontados, manutenção de custódia, etc.",
+    "fluxo_principal": "Cadastros bancários → Geração de remessa CNAB → Envio ao banco → Processamento de retorno → Baixa automática → Relatórios",
+    "rotinas": [
+      {
+        "codigo": 1501,
+        "nome": "Gerar arq. magnético remessa CNAB 400",
+        "explicacao": "Gera arquivo de remessa no padrão CNAB 400 para cobrança bancária (layout mais antigo, ainda usado por alguns bancos).",
+        "proxima_rotina_sugerida": 1505,
+        "dependencias": [1234, 1520]
+      },
+      {
+        "codigo": 1502,
+        "nome": "Baixar arquivo magnético CNAB 400",
+        "explicacao": "Processa arquivo de retorno CNAB 400, baixando automaticamente os títulos liquidados e atualizando pendências.",
+        "proxima_rotina_sugerida": 1512,
+        "dependencias": [1501]
+      },
+      {
+        "codigo": 1503,
+        "nome": "Baixar Automaticamente Vendas por Cartão",
+        "explicacao": "Baixa automaticamente os títulos gerados por vendas com cartão de crédito/débito, usando arquivo de retorno da administradora.",
+        "proxima_rotina_sugerida": 1524,
+        "dependencias": [1207]
+      },
+      {
+        "codigo": 1504,
+        "nome": "Emitir Boleto Bancário Laser",
+        "explicacao": "Emite boleto bancário no formato laser (PDF) para impressão em papel A4.",
+        "proxima_rotina_sugerida": 1515,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1505,
+        "nome": "Gerar arq. magnético remessa CNAB 240",
+        "explicacao": "Gera arquivo de remessa no padrão CNAB 240 para cobrança bancária (layout atual, obrigatório para a maioria dos bancos).",
+        "proxima_rotina_sugerida": 1510,
+        "dependencias": [1234, 1520]
+      },
+      {
+        "codigo": 1506,
+        "nome": "Montar CHP para custódia",
+        "explicacao": "Monta CHP (Custódia de Cheques) para agrupar cheques recebidos e enviá-los à custódia bancária.",
+        "proxima_rotina_sugerida": 1511,
+        "dependencias": [1508]
+      },
+      {
+        "codigo": 1508,
+        "nome": "Cancelar custódia",
+        "explicacao": "Cancela uma custódia de cheques (retira da guarda) antes do envio ao banco.",
+        "proxima_rotina_sugerida": 1523,
+        "dependencias": [1506]
+      },
+      {
+        "codigo": 1509,
+        "nome": "Gerar arq.magnético identificação de depósitos",
+        "explicacao": "Gera arquivo magnético para identificação de depósitos bancários (conciliação de recebimentos não identificados).",
+        "proxima_rotina_sugerida": 1502,
+        "dependencias": []
+      },
+      {
+        "codigo": 1510,
+        "nome": "Gerar Remessa de Alteração de Títulos",
+        "explicacao": "Gera remessa para alteração de títulos já enviados ao banco (ex: prorrogação de vencimento, alteração de valor).",
+        "proxima_rotina_sugerida": 1509,
+        "dependencias": [1505, 1231]
+      },
+      {
+        "codigo": 1511,
+        "nome": "Rel. Cheques Custodiados",
+        "explicacao": "Relatório de cheques em custódia, com detalhes de valores, emitentes e datas.",
+        "proxima_rotina_sugerida": 1508,
+        "dependencias": [1506]
+      },
+      {
+        "codigo": 1512,
+        "nome": "Baixar arquivo magnético CNAB 240",
+        "explicacao": "Processa arquivo de retorno CNAB 240, baixando títulos liquidados, atualizando pendências e registrando ocorrências.",
+        "proxima_rotina_sugerida": 1503,
+        "dependencias": [1505]
+      },
+      {
+        "codigo": 1515,
+        "nome": "Agrupar boleto bancário laser",
+        "explicacao": "Agrupa múltiplos boletos bancários em um único arquivo PDF para impressão otimizada.",
+        "proxima_rotina_sugerida": 1506,
+        "dependencias": [1504]
+      },
+      {
+        "codigo": 1520,
+        "nome": "Manter dados de integração bancária",
+        "explicacao": "Mantém dados de integração com bancos: convênios, carteiras, agências, contas, códigos de transmissão.",
+        "proxima_rotina_sugerida": 1521,
+        "dependencias": []
+      },
+      {
+        "codigo": 1521,
+        "nome": "Layout integração bancária",
+        "explicacao": "Define layouts de integração bancária (CNAB 400, CNAB 240, remessa/retorno) por banco.",
+        "proxima_rotina_sugerida": 1501,
+        "dependencias": [1520]
+      },
+      {
+        "codigo": 1523,
+        "nome": "Manutenção de custódia",
+        "explicacao": "Manutenção de custódia de cheques: entrada, saída, transferência entre custódias.",
+        "proxima_rotina_sugerida": 1525,
+        "dependencias": [1506]
+      },
+      {
+        "codigo": 1524,
+        "nome": "Relatório de títulos descontados no banco",
+        "explicacao": "Relatório de títulos encaminhados para desconto bancário (vendor ou desconto de duplicatas).",
+        "proxima_rotina_sugerida": 1504,
+        "dependencias": [1234]
+      },
+      {
+        "codigo": 1525,
+        "nome": "Baixa de cheques para custódia",
+        "explicacao": "Baixa cheques que estavam em custódia (após desconto, devolução ou depósito).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [1523]
+      },
+      {
+        "codigo": 1507,
+        "nome": "Gerar arquivo de remessa - CNAB (genérico)",
+        "explicacao": "Função genérica (não listada explicitamente, mas mencionada em algumas versões) para gerar remessas CNAB.",
+        "proxima_rotina_sugerida": 1512,
+        "dependencias": [1520]
+      }
+    ]
+  }
+}

@@ -1,0 +1,696 @@
+{
+  "modulo": {
+    "nome": "LIVROS FISCAIS",
+    "codigo_modulo": 10,
+    "descricao_geral": "Módulo de Livros Fiscais do WinThor. Gerencia a escrituração fiscal obrigatória: livros de entrada e saída, apuração de ICMS, IPI, PIS/COFINS, geração de arquivos digitais (SPED, GIA, Sintegra, EFD, etc.), manifestação de NF-e, cartas de correção, inventário fiscal, entre outras obrigações acessórias.",
+    "fluxo_principal": "Lançamentos fiscais → Apuração → Geração de livros → Relatórios → Arquivos magnéticos → Transmissão",
+    "rotinas": [
+      {
+        "codigo": 1001,
+        "nome": "Livro de Registro de Entrada",
+        "explicacao": "Livro fiscal obrigatório que registra todas as notas fiscais de entrada (compras, transferências, devoluções). Base para apuração de ICMS e outros impostos.",
+        "proxima_rotina_sugerida": 1003,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1003,
+        "nome": "Livro de Registro de Saída",
+        "explicacao": "Livro fiscal obrigatório que registra todas as notas fiscais de saída (vendas, transferências, devoluções). Essencial para apuração de ICMS.",
+        "proxima_rotina_sugerida": 1023,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1023,
+        "nome": "Livro de registro de entrada/saída - dia",
+        "explicacao": "Versão diária do livro de registro de entrada e saída, consolidando as movimentações do dia.",
+        "proxima_rotina_sugerida": 1089,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1089,
+        "nome": "Livro Reg. Prestação de Serviço",
+        "explicacao": "Livro fiscal para registro de prestações de serviço (ISSQN).",
+        "proxima_rotina_sugerida": 1024,
+        "dependencias": []
+      },
+      {
+        "codigo": 1024,
+        "nome": "Livro reg. apuração do ICMS/ST-Parte I",
+        "explicacao": "Parte I do livro de apuração do ICMS e Substituição Tributária. Calcula o imposto devido no período.",
+        "proxima_rotina_sugerida": 1025,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1025,
+        "nome": "Livro reg. apuração do ICMS/ST-Parte II",
+        "explicacao": "Parte II do livro de apuração do ICMS/ST, com detalhamentos adicionais.",
+        "proxima_rotina_sugerida": 1035,
+        "dependencias": [1024]
+      },
+      {
+        "codigo": 1035,
+        "nome": "Livro reg. apuração do TARE - DF",
+        "explicacao": "Livro de apuração do TARE para o Distrito Federal (substitui parte do ICMS).",
+        "proxima_rotina_sugerida": 1013,
+        "dependencias": []
+      },
+      {
+        "codigo": 1013,
+        "nome": "Livros Fiscais de IPI",
+        "explicacao": "Livros fiscais específicos para controle de IPI (Imposto sobre Produtos Industrializados).",
+        "proxima_rotina_sugerida": 1010,
+        "dependencias": []
+      },
+      {
+        "codigo": 1010,
+        "nome": "Livro de Registro de Inventário",
+        "explicacao": "Registro do inventário físico de estoques para fins fiscais (obrigatório anualmente).",
+        "proxima_rotina_sugerida": 1070,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1070,
+        "nome": "Livro Reg. de Controle de Produção/Estoque",
+        "explicacao": "Registro de controle de produção e estoque para indústrias (obrigação acessória).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [1127]
+      },
+      {
+        "codigo": 1002,
+        "nome": "Resumo livro de entrada",
+        "explicacao": "Relatório resumido do livro de registro de entrada, com totais por período.",
+        "proxima_rotina_sugerida": 1004,
+        "dependencias": [1001]
+      },
+      {
+        "codigo": 1004,
+        "nome": "Resumo livro de saída",
+        "explicacao": "Relatório resumido do livro de registro de saída, com totais por período.",
+        "proxima_rotina_sugerida": 1006,
+        "dependencias": [1003]
+      },
+      {
+        "codigo": 1006,
+        "nome": "Relação Fornecedores - Livro Entrada",
+        "explicacao": "Listagem de fornecedores com valores registrados no livro de entrada.",
+        "proxima_rotina_sugerida": 1020,
+        "dependencias": [202, 1001]
+      },
+      {
+        "codigo": 1020,
+        "nome": "Termo de Abertura e Encerramento",
+        "explicacao": "Termo de abertura e encerramento de livros fiscais, obrigatório para autenticação.",
+        "proxima_rotina_sugerida": 1005,
+        "dependencias": []
+      },
+      {
+        "codigo": 1005,
+        "nome": "Calendário de obrigações fiscais",
+        "explicacao": "Calendário com as principais obrigações fiscais e seus prazos.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1007,
+        "nome": "Manutenção de nota fiscal de entrada",
+        "explicacao": "Permite alterar informações de notas fiscais de entrada já lançadas (com controle).",
+        "proxima_rotina_sugerida": 1008,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1008,
+        "nome": "Manutenção de nota fiscal de saída",
+        "explicacao": "Permite alterar informações de notas fiscais de saída já emitidas (com controle).",
+        "proxima_rotina_sugerida": 1064,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1064,
+        "nome": "Manutenção de Reduções Z",
+        "explicacao": "Manutenção das reduções Z (ECF) para fins fiscais.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1074,
+        "nome": "Geração conta corrente - PEPS",
+        "explicacao": "Geração de conta corrente fiscal pelo método PEPS (Primeiro que Entra, Primeiro que Sai).",
+        "proxima_rotina_sugerida": 1000,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1000,
+        "nome": "Processamentos Fiscais",
+        "explicacao": "Processamento geral de rotinas fiscais (apuração, fechamento, etc.).",
+        "proxima_rotina_sugerida": 1095,
+        "dependencias": []
+      },
+      {
+        "codigo": 1095,
+        "nome": "Processo de manifestação NF-e",
+        "explicacao": "Processo de manifestação do destinatário para notas fiscais eletrônicas (ciência, operação, desconhecimento).",
+        "proxima_rotina_sugerida": 1017,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1017,
+        "nome": "Relatórios para fins de Ressarcimento",
+        "explicacao": "Relatórios para pedido de ressarcimento de ICMS (ex: ST, diferencial de alíquota).",
+        "proxima_rotina_sugerida": 1026,
+        "dependencias": []
+      },
+      {
+        "codigo": 1026,
+        "nome": "Relatório de Saídas com ST",
+        "explicacao": "Relatório de saídas com Substituição Tributária.",
+        "proxima_rotina_sugerida": 1027,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1027,
+        "nome": "Relatório de Dev. Clientes com ST",
+        "explicacao": "Relatório de devoluções de clientes que envolvem Substituição Tributária.",
+        "proxima_rotina_sugerida": 1041,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1041,
+        "nome": "Relatório de Produtos para Ressarcimento",
+        "explicacao": "Relatório de produtos que geram direito a ressarcimento de ICMS.",
+        "proxima_rotina_sugerida": 1063,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1063,
+        "nome": "Relatório de Ressarcimento - DF",
+        "explicacao": "Relatório de ressarcimento de ICMS específico para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1076,
+        "dependencias": []
+      },
+      {
+        "codigo": 1076,
+        "nome": "Relatório de Entradas com ST",
+        "explicacao": "Relatório de entradas de mercadorias com Substituição Tributária.",
+        "proxima_rotina_sugerida": 1058,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1058,
+        "nome": "Relatório de Inventário com ST",
+        "explicacao": "Relatório de inventário de produtos sujeitos a ST.",
+        "proxima_rotina_sugerida": 1062,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1062,
+        "nome": "Relatório de Entradas - PIS/COFINS",
+        "explicacao": "Relatório de entradas para apuração de PIS e COFINS.",
+        "proxima_rotina_sugerida": 1054,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1054,
+        "nome": "Relatório de Devoluções - PIS/COFINS",
+        "explicacao": "Relatório de devoluções para ajuste de PIS/COFINS.",
+        "proxima_rotina_sugerida": 1042,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1042,
+        "nome": "Relatório de Saídas - PIS/COFINS",
+        "explicacao": "Relatório de saídas para apuração de PIS/COFINS.",
+        "proxima_rotina_sugerida": 1022,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1022,
+        "nome": "Relatório de apoio DIFAL - ICMS PARTILHA",
+        "explicacao": "Relatório de apoio para cálculo do DIFAL (diferencial de alíquota) na partilha do ICMS.",
+        "proxima_rotina_sugerida": 1080,
+        "dependencias": []
+      },
+      {
+        "codigo": 1080,
+        "nome": "Relatório Aux. Produtos - PIS/COFINS",
+        "explicacao": "Relatório auxiliar de produtos para apuração de PIS/COFINS.",
+        "proxima_rotina_sugerida": 1096,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1096,
+        "nome": "Relatório Apoio Conferência Informações",
+        "explicacao": "Relatório de apoio para conferência de informações fiscais.",
+        "proxima_rotina_sugerida": 1057,
+        "dependencias": []
+      },
+      {
+        "codigo": 1057,
+        "nome": "Relatório de auditoria",
+        "explicacao": "Relatório de auditoria de lançamentos fiscais.",
+        "proxima_rotina_sugerida": 1082,
+        "dependencias": [749, 1206]
+      },
+      {
+        "codigo": 1082,
+        "nome": "Diário Auxiliar de Contas a Receber",
+        "explicacao": "Diário auxiliar para fins fiscais das contas a receber.",
+        "proxima_rotina_sugerida": 1075,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1075,
+        "nome": "Validação de Dados Fiscais - SEFAZ",
+        "explicacao": "Validação de dados fiscais junto à SEFAZ (consistência de informações).",
+        "proxima_rotina_sugerida": 1018,
+        "dependencias": []
+      },
+      {
+        "codigo": 1018,
+        "nome": "Relatório de ICMS Antecipado",
+        "explicacao": "Relatório de ICMS antecipado (pago antes da operação).",
+        "proxima_rotina_sugerida": 1050,
+        "dependencias": []
+      },
+      {
+        "codigo": 1050,
+        "nome": "Razão Analítico Cliente",
+        "explicacao": "Razão analítico por cliente para fins fiscais.",
+        "proxima_rotina_sugerida": 1072,
+        "dependencias": [302]
+      },
+      {
+        "codigo": 1072,
+        "nome": "Relatórios de Apoio a Conferencia Apuração",
+        "explicacao": "Relatórios de apoio à conferência da apuração fiscal.",
+        "proxima_rotina_sugerida": 1045,
+        "dependencias": []
+      },
+      {
+        "codigo": 1045,
+        "nome": "Razão Analítico Fornecedor",
+        "explicacao": "Razão analítico por fornecedor para fins fiscais.",
+        "proxima_rotina_sugerida": 1047,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 1047,
+        "nome": "Conferência de Dados Fiscais",
+        "explicacao": "Conferência de consistência dos dados fiscais antes da apuração.",
+        "proxima_rotina_sugerida": 1031,
+        "dependencias": []
+      },
+      {
+        "codigo": 1031,
+        "nome": "Relatórios Específicos por Estado",
+        "explicacao": "Relatórios fiscais específicos para cada estado (ex: GIA, Sintegra, EFD).",
+        "proxima_rotina_sugerida": 1071,
+        "dependencias": []
+      },
+      {
+        "codigo": 1071,
+        "nome": "Relatório ICMS s/ Frete",
+        "explicacao": "Relatório de ICMS sobre frete (base de cálculo do imposto).",
+        "proxima_rotina_sugerida": 1079,
+        "dependencias": []
+      },
+      {
+        "codigo": 1079,
+        "nome": "Relatório Produtos - Controle Especial",
+        "explicacao": "Relatório de produtos sujeitos a controle especial (ex: medicamentos, armas).",
+        "proxima_rotina_sugerida": 1033,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1033,
+        "nome": "Relatório GI/ICMS Entrada / Saída",
+        "explicacao": "Relatório de GIA (Guia de Informação e Apuração do ICMS) de entrada e saída.",
+        "proxima_rotina_sugerida": 1078,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1078,
+        "nome": "Resumo de Vendas",
+        "explicacao": "Resumo de vendas para fins fiscais.",
+        "proxima_rotina_sugerida": 1029,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 1029,
+        "nome": "Resumo Diário por Alíquotas",
+        "explicacao": "Resumo diário de vendas por alíquota de ICMS.",
+        "proxima_rotina_sugerida": 1028,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1028,
+        "nome": "Resumo de Saídas por CFOP/Tipo Venda",
+        "explicacao": "Resumo de saídas agrupado por CFOP e tipo de venda.",
+        "proxima_rotina_sugerida": 1055,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1055,
+        "nome": "Títulos Faturados por Cobrança",
+        "explicacao": "Relatório de títulos faturados agrupados por cobrança.",
+        "proxima_rotina_sugerida": 1040,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1040,
+        "nome": "Livro Reg. de Controle de Produção",
+        "explicacao": "Livro de registro de controle de produção (indústria).",
+        "proxima_rotina_sugerida": 1014,
+        "dependencias": [1127]
+      },
+      {
+        "codigo": 1014,
+        "nome": "Relatório de Saídas por tributação",
+        "explicacao": "Relatório de saídas por tipo de tributação (ICMS, IPI, PIS, COFINS).",
+        "proxima_rotina_sugerida": 1092,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1092,
+        "nome": "Detalhamento de entradas/saídas - dia/CFOP",
+        "explicacao": "Detalhamento de entradas e saídas por dia e CFOP.",
+        "proxima_rotina_sugerida": 1037,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1037,
+        "nome": "Relatório de DARE recolher",
+        "explicacao": "Relatório de DARE (Documento de Arrecadação de Receitas Estaduais) a recolher.",
+        "proxima_rotina_sugerida": 1067,
+        "dependencias": []
+      },
+      {
+        "codigo": 1067,
+        "nome": "Emissão de carta de correção",
+        "explicacao": "Emissão de carta de correção para NF-e (correção de informações sem cancelamento).",
+        "proxima_rotina_sugerida": 1061,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1061,
+        "nome": "Resumo de faturamento TARE - DF",
+        "explicacao": "Resumo de faturamento TARE para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1016,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1016,
+        "nome": "Gerador de relatório fiscal",
+        "explicacao": "Gerador genérico de relatórios fiscais customizados.",
+        "proxima_rotina_sugerida": 1087,
+        "dependencias": []
+      },
+      {
+        "codigo": 1087,
+        "nome": "Apuração ICMS fomentar",
+        "explicacao": "Apuração de ICMS para fins de fomento (incentivos fiscais).",
+        "proxima_rotina_sugerida": 1060,
+        "dependencias": []
+      },
+      {
+        "codigo": 1060,
+        "nome": "Relatório termo de acordo - ES",
+        "explicacao": "Relatório de termo de acordo para o Espírito Santo.",
+        "proxima_rotina_sugerida": 1094,
+        "dependencias": []
+      },
+      {
+        "codigo": 1094,
+        "nome": "Auditoria de venda triangular",
+        "explicacao": "Auditoria de vendas triangulares (operação com três partes).",
+        "proxima_rotina_sugerida": 1011,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 1011,
+        "nome": "Geração Integração Contábil",
+        "explicacao": "Geração de integração contábil dos lançamentos fiscais.",
+        "proxima_rotina_sugerida": 1012,
+        "dependencias": [749, 1206]
+      },
+      {
+        "codigo": 1012,
+        "nome": "Geração arquivo TARE - DF",
+        "explicacao": "Geração do arquivo TARE para o Distrito Federal.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1052,
+        "nome": "Geração arquivo Sintegra Nacional",
+        "explicacao": "Geração do arquivo Sintegra (Sistema Integrado de Informações sobre Operações Interestaduais com Mercadorias e Serviços).",
+        "proxima_rotina_sugerida": 1066,
+        "dependencias": []
+      },
+      {
+        "codigo": 1066,
+        "nome": "Geração arquivo - NF Paulista",
+        "explicacao": "Geração do arquivo da Nota Fiscal Paulista.",
+        "proxima_rotina_sugerida": 1073,
+        "dependencias": []
+      },
+      {
+        "codigo": 1073,
+        "nome": "Geração arquivo SEF - PE",
+        "explicacao": "Geração do arquivo SEF para Pernambuco.",
+        "proxima_rotina_sugerida": 1048,
+        "dependencias": []
+      },
+      {
+        "codigo": 1048,
+        "nome": "Geração arquivo GIM - DF",
+        "explicacao": "Geração do arquivo GIM para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1069,
+        "dependencias": []
+      },
+      {
+        "codigo": 1069,
+        "nome": "Geração arquivo GIA - SP",
+        "explicacao": "Geração do arquivo GIA (Guia de Informação e Apuração do ICMS) para São Paulo.",
+        "proxima_rotina_sugerida": 1086,
+        "dependencias": []
+      },
+      {
+        "codigo": 1086,
+        "nome": "Geração arquivo DIEF - CE",
+        "explicacao": "Geração do arquivo DIEF para o Ceará.",
+        "proxima_rotina_sugerida": 1085,
+        "dependencias": []
+      },
+      {
+        "codigo": 1085,
+        "nome": "Geração arquivo IN 86/2002",
+        "explicacao": "Geração do arquivo conforme Instrução Normativa 86/2002 (obrigações acessórias).",
+        "proxima_rotina_sugerida": 1065,
+        "dependencias": []
+      },
+      {
+        "codigo": 1065,
+        "nome": "Geração arquivo GNRE",
+        "explicacao": "Geração do arquivo GNRE (Guia Nacional de Recolhimento de Tributos Estaduais).",
+        "proxima_rotina_sugerida": 1088,
+        "dependencias": []
+      },
+      {
+        "codigo": 1088,
+        "nome": "Geração arquivos SUFRAMA",
+        "explicacao": "Geração de arquivos para a SUFRAMA (Superintendência da Zona Franca de Manaus).",
+        "proxima_rotina_sugerida": 1019,
+        "dependencias": []
+      },
+      {
+        "codigo": 1019,
+        "nome": "Geração arquivo Compra Legal - BA",
+        "explicacao": "Geração do arquivo Compra Legal para a Bahia.",
+        "proxima_rotina_sugerida": 1097,
+        "dependencias": []
+      },
+      {
+        "codigo": 1097,
+        "nome": "Geração arquivo Livro Fiscal Eletrônico",
+        "explicacao": "Geração do arquivo do Livro Fiscal Eletrônico (SPED Fiscal).",
+        "proxima_rotina_sugerida": 1030,
+        "dependencias": []
+      },
+      {
+        "codigo": 1030,
+        "nome": "Geração arquivo GIAM - RO",
+        "explicacao": "Geração do arquivo GIAM para Rondônia.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1053,
+        "nome": "Geração arquivo DAPISEF - MG",
+        "explicacao": "Geração do arquivo DAPISEF para Minas Gerais.",
+        "proxima_rotina_sugerida": 1049,
+        "dependencias": []
+      },
+      {
+        "codigo": 1049,
+        "nome": "Geração arquivo DIC - SE",
+        "explicacao": "Geração do arquivo DIC para Sergipe.",
+        "proxima_rotina_sugerida": 1056,
+        "dependencias": []
+      },
+      {
+        "codigo": 1056,
+        "nome": "Geração arquivo Passe Fiscal - GO",
+        "explicacao": "Geração do arquivo Passe Fiscal para Goiás.",
+        "proxima_rotina_sugerida": 1034,
+        "dependencias": []
+      },
+      {
+        "codigo": 1034,
+        "nome": "Geração arquivo GIA - MS",
+        "explicacao": "Geração do arquivo GIA para Mato Grosso do Sul.",
+        "proxima_rotina_sugerida": 1081,
+        "dependencias": []
+      },
+      {
+        "codigo": 1081,
+        "nome": "Geração arquivo DIME - SC",
+        "explicacao": "Geração do arquivo DIME para Santa Catarina.",
+        "proxima_rotina_sugerida": 1043,
+        "dependencias": []
+      },
+      {
+        "codigo": 1043,
+        "nome": "Geração do arquivo GIA-ST",
+        "explicacao": "Geração do arquivo GIA-ST (Substituição Tributária).",
+        "proxima_rotina_sugerida": 1021,
+        "dependencias": []
+      },
+      {
+        "codigo": 1021,
+        "nome": "Geração do arquivo DIEF - ES",
+        "explicacao": "Geração do arquivo DIEF para o Espírito Santo.",
+        "proxima_rotina_sugerida": 1015,
+        "dependencias": []
+      },
+      {
+        "codigo": 1015,
+        "nome": "Geração do arquivo DMA - BA",
+        "explicacao": "Geração do arquivo DMA para a Bahia.",
+        "proxima_rotina_sugerida": 1032,
+        "dependencias": []
+      },
+      {
+        "codigo": 1032,
+        "nome": "Geração do arquivo GIA - RS",
+        "explicacao": "Geração do arquivo GIA para o Rio Grande do Sul.",
+        "proxima_rotina_sugerida": 1044,
+        "dependencias": []
+      },
+      {
+        "codigo": 1044,
+        "nome": "Geração de arquivo Gia - PE",
+        "explicacao": "Geração do arquivo GIA para Pernambuco.",
+        "proxima_rotina_sugerida": 1093,
+        "dependencias": []
+      },
+      {
+        "codigo": 1093,
+        "nome": "Geração do arquivo GIA - MT",
+        "explicacao": "Geração do arquivo GIA para Mato Grosso.",
+        "proxima_rotina_sugerida": 1090,
+        "dependencias": []
+      },
+      {
+        "codigo": 1090,
+        "nome": "Geração do arquivo DOT - ES",
+        "explicacao": "Geração do arquivo DOT para o Espírito Santo.",
+        "proxima_rotina_sugerida": 1046,
+        "dependencias": []
+      },
+      {
+        "codigo": 1046,
+        "nome": "Geração do Convênio EDI Fiscal",
+        "explicacao": "Geração de arquivo EDI para convênios fiscais.",
+        "proxima_rotina_sugerida": 1059,
+        "dependencias": []
+      },
+      {
+        "codigo": 1059,
+        "nome": "Geração do arquivo CENFOP-CE",
+        "explicacao": "Geração do arquivo CENFOP para o Ceará.",
+        "proxima_rotina_sugerida": 1091,
+        "dependencias": []
+      },
+      {
+        "codigo": 1091,
+        "nome": "Geração do arquivo DAC - AL",
+        "explicacao": "Geração do arquivo DAC para Alagoas.",
+        "proxima_rotina_sugerida": 1039,
+        "dependencias": []
+      },
+      {
+        "codigo": 1039,
+        "nome": "Geração de arquivo Ato-Cotepe",
+        "explicacao": "Geração de arquivo conforme Ato COTEPE (Convênio de ICMS).",
+        "proxima_rotina_sugerida": 1077,
+        "dependencias": []
+      },
+      {
+        "codigo": 1077,
+        "nome": "Geração do arquivo DIA - AM",
+        "explicacao": "Geração do arquivo DIA para o Amazonas.",
+        "proxima_rotina_sugerida": 1083,
+        "dependencias": []
+      },
+      {
+        "codigo": 1083,
+        "nome": "Geração do arquivo GIA - PR",
+        "explicacao": "Geração do arquivo GIA para o Paraná.",
+        "proxima_rotina_sugerida": 1098,
+        "dependencias": []
+      },
+      {
+        "codigo": 1098,
+        "nome": "Geração Arquivo RPA - SP",
+        "explicacao": "Geração do arquivo RPA para São Paulo.",
+        "proxima_rotina_sugerida": 1084,
+        "dependencias": []
+      },
+      {
+        "codigo": 1084,
+        "nome": "Transmissão do EFD - REINF",
+        "explicacao": "Transmissão do EFD-Reinf (Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais).",
+        "proxima_rotina_sugerida": 1009,
+        "dependencias": []
+      },
+      {
+        "codigo": 1009,
+        "nome": "Controle Patrimônio",
+        "explicacao": "Controle de bens do ativo imobilizado para fins fiscais.",
+        "proxima_rotina_sugerida": 1038,
+        "dependencias": [3401]
+      },
+      {
+        "codigo": 1038,
+        "nome": "Geração da DIEF - PA",
+        "explicacao": "Geração do arquivo DIEF para o Pará.",
+        "proxima_rotina_sugerida": 1099,
+        "dependencias": []
+      },
+      {
+        "codigo": 1099,
+        "nome": "Geração Arquivo GIA-RJ",
+        "explicacao": "Geração do arquivo GIA para o Rio de Janeiro.",
+        "proxima_rotina_sugerida": 1068,
+        "dependencias": []
+      },
+      {
+        "codigo": 1068,
+        "nome": "Objetos de Banco de Dados-Livros Fiscais",
+        "explicacao": "Manutenção de objetos de banco de dados específicos do módulo fiscal.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [500]
+      }
+    ]
+  }
+}

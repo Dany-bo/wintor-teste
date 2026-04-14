@@ -1,0 +1,430 @@
+{
+  "modulo": {
+    "nome": "FATURAMENTO",
+    "codigo_modulo": 14,
+    "descricao_geral": "Módulo de Faturamento do WinThor. Gerencia todo o processo de emissão de notas fiscais (NF-e, NFC-e, CT-e), conhecimento de frete, faturamento de pedidos, controle de cargas, manifestação de documentos fiscais, contingência, inutilização de numeração, carta de correção, etc.",
+    "fluxo_principal": "Pedido de Venda → Lançar Corte → Gerar Faturamento → Emitir NF → Cancelamento → Relatórios",
+    "rotinas": [
+      {
+        "codigo": 1400,
+        "nome": "Atualizar Procedures",
+        "explicacao": "Atualiza procedures de banco de dados relacionadas ao faturamento.",
+        "proxima_rotina_sugerida": 1401,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 1401,
+        "nome": "Lançar Corte",
+        "explicacao": "Rotina que reserva (corta) mercadorias do estoque para um pedido de venda, impedindo que sejam vendidas para outro cliente.",
+        "proxima_rotina_sugerida": 1402,
+        "dependencias": [316, 901]
+      },
+      {
+        "codigo": 1402,
+        "nome": "Gerar Faturamento",
+        "explicacao": "Principal rotina de faturamento. Gera documentos fiscais (notas fiscais) a partir de pedidos de venda ou cortes. Calcula impostos, emite NF-e e atualiza estoque.",
+        "proxima_rotina_sugerida": 1409,
+        "dependencias": [1401]
+      },
+      {
+        "codigo": 1403,
+        "nome": "Emitir Nota Fiscal de Venda",
+        "explicacao": "Emite a nota fiscal de venda (formato DANFE) para impressão ou envio ao cliente.",
+        "proxima_rotina_sugerida": 1404,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1404,
+        "nome": "Emitir Boleto Bancário Matricial",
+        "explicacao": "Emite boletos bancários em formato matricial (impressora contínua) para clientes.",
+        "proxima_rotina_sugerida": 1405,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1405,
+        "nome": "Emitir Duplicata Mercantil",
+        "explicacao": "Emite duplicata mercantil para cobrança (modelo tradicional).",
+        "proxima_rotina_sugerida": 1407,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1406,
+        "nome": "Gerar faturamento por pedido",
+        "explicacao": "Gera faturamento para um pedido específico (versão alternativa da 1402).",
+        "proxima_rotina_sugerida": 1469,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1407,
+        "nome": "Romaneio Simplificado",
+        "explicacao": "Emite romaneio de entrega (simplificado) para o transportador.",
+        "proxima_rotina_sugerida": 1425,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1408,
+        "nome": "Informar dados de autenticação da GNRE",
+        "explicacao": "Informa dados de autenticação da GNRE (Guia Nacional de Recolhimento de Tributos Estaduais) para faturamento interestadual.",
+        "proxima_rotina_sugerida": 1406,
+        "dependencias": [1065]
+      },
+      {
+        "codigo": 1409,
+        "nome": "Cancelar Nota Fiscal",
+        "explicacao": "Cancela uma nota fiscal emitida (desde que não tenha sido registrada pelo cliente).",
+        "proxima_rotina_sugerida": 1419,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1410,
+        "nome": "Relatório de Notas Fiscais de Serviços",
+        "explicacao": "Relatório de notas fiscais de serviço (NFS-e) emitidas.",
+        "proxima_rotina_sugerida": 1416,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1416,
+        "nome": "Gerar Arquivo Texto GNRE",
+        "explicacao": "Gera arquivo texto da GNRE para pagamento.",
+        "proxima_rotina_sugerida": 1433,
+        "dependencias": [1065]
+      },
+      {
+        "codigo": 1417,
+        "nome": "Rel. Apuração de ICMS Antecipado",
+        "explicacao": "Relatório de apuração de ICMS antecipado pago no faturamento.",
+        "proxima_rotina_sugerida": 1418,
+        "dependencias": [1024]
+      },
+      {
+        "codigo": 1418,
+        "nome": "Rel. Notas Fiscais Canceladas",
+        "explicacao": "Relatório de notas fiscais canceladas em um período.",
+        "proxima_rotina_sugerida": 1424,
+        "dependencias": [1409]
+      },
+      {
+        "codigo": 1419,
+        "nome": "Gerar Nota Fiscal Transf. para Filial Virtual",
+        "explicacao": "Gera nota fiscal de transferência para filial virtual (entre empresas do mesmo grupo).",
+        "proxima_rotina_sugerida": 1422,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1422,
+        "nome": "Lançar Retenção ST na Carga",
+        "explicacao": "Lança retenção de Substituição Tributária (ST) na carga de faturamento.",
+        "proxima_rotina_sugerida": 1429,
+        "dependencias": [1402, 1026]
+      },
+      {
+        "codigo": 1423,
+        "nome": "Devolução de transf. filial virtual",
+        "explicacao": "Registra devolução de transferência entre filiais virtuais.",
+        "proxima_rotina_sugerida": 1470,
+        "dependencias": [1419]
+      },
+      {
+        "codigo": 1424,
+        "nome": "Produto a Recolher por Cliente (troca)",
+        "explicacao": "Lista produtos a serem recolhidos de clientes (devolução/troca).",
+        "proxima_rotina_sugerida": 1428,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1425,
+        "nome": "Rel. Pedidos por Carregamento",
+        "explicacao": "Relatório de pedidos agrupados por carregamento de faturamento.",
+        "proxima_rotina_sugerida": 1440,
+        "dependencias": [1402, 901]
+      },
+      {
+        "codigo": 1428,
+        "nome": "Produto Vendido por Carregamento",
+        "explicacao": "Relatório de produtos vendidos por carregamento.",
+        "proxima_rotina_sugerida": 1431,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1429,
+        "nome": "Alterar Roterização de Entrega",
+        "explicacao": "Altera a roteirização de entrega após o faturamento.",
+        "proxima_rotina_sugerida": 1432,
+        "dependencias": [963]
+      },
+      {
+        "codigo": 1431,
+        "nome": "Rel. de Retenção",
+        "explicacao": "Relatório de retenções de impostos (PIS, COFINS, CSLL, IR) no faturamento.",
+        "proxima_rotina_sugerida": 1457,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1432,
+        "nome": "Gerar Faturamento do Balcão Reserva",
+        "explicacao": "Gera faturamento para vendas de balcão com reserva de estoque.",
+        "proxima_rotina_sugerida": 1439,
+        "dependencias": [1402, 2075]
+      },
+      {
+        "codigo": 1433,
+        "nome": "Emitir Mapa de Carregamento",
+        "explicacao": "Emite mapa de carregamento para expedição.",
+        "proxima_rotina_sugerida": 1436,
+        "dependencias": [1402, 901]
+      },
+      {
+        "codigo": 1436,
+        "nome": "Gerar Nota Fiscal de Transf. para Depósito",
+        "explicacao": "Gera nota fiscal de transferência entre depósitos da mesma filial.",
+        "proxima_rotina_sugerida": 1445,
+        "dependencias": [1123]
+      },
+      {
+        "codigo": 1437,
+        "nome": "Lançar Vendas Consignadas",
+        "explicacao": "Lança vendas consignadas (estoque de terceiros) para faturamento.",
+        "proxima_rotina_sugerida": 1448,
+        "dependencias": [1402, 1195]
+      },
+      {
+        "codigo": 1439,
+        "nome": "Cancelar Nota Fiscal de Transf. Virtual",
+        "explicacao": "Cancela nota fiscal de transferência virtual.",
+        "proxima_rotina_sugerida": 1443,
+        "dependencias": [1419]
+      },
+      {
+        "codigo": 1440,
+        "nome": "Emitir Contrato de Comodato",
+        "explicacao": "Emite contrato de comodato (cessão de equipamentos) para faturamento.",
+        "proxima_rotina_sugerida": 1441,
+        "dependencias": [2708]
+      },
+      {
+        "codigo": 1441,
+        "nome": "Emitir Conhecimento de Frete",
+        "explicacao": "Emite conhecimento de frete (CT-e) para transporte de mercadorias.",
+        "proxima_rotina_sugerida": 1446,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1442,
+        "nome": "Geração de Conhecimentos de Frete Eletrônicos",
+        "explicacao": "Gera CT-e eletrônico para envio à SEFAZ.",
+        "proxima_rotina_sugerida": 1417,
+        "dependencias": [1441]
+      },
+      {
+        "codigo": 1443,
+        "nome": "Gerar Nota Fiscal de Cupons Fiscais",
+        "explicacao": "Gera nota fiscal consolidada a partir de cupons fiscais (ECF).",
+        "proxima_rotina_sugerida": 1447,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1445,
+        "nome": "Cancelar Conhecimento de Frete",
+        "explicacao": "Cancela conhecimento de frete (CT-e) emitido.",
+        "proxima_rotina_sugerida": 1461,
+        "dependencias": [1441]
+      },
+      {
+        "codigo": 1446,
+        "nome": "Gerar Nota Fiscal Prestação de Serviço",
+        "explicacao": "Gera nota fiscal de prestação de serviço (NFS-e).",
+        "proxima_rotina_sugerida": 1459,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1447,
+        "nome": "Cancelar nota fiscal de serviço",
+        "explicacao": "Cancela nota fiscal de serviço emitida.",
+        "proxima_rotina_sugerida": 1437,
+        "dependencias": [1446]
+      },
+      {
+        "codigo": 1448,
+        "nome": "Lançar Valor de Frete na Nota Fiscal",
+        "explicacao": "Adiciona valor de frete na nota fiscal, desdobrando para CFOP específico.",
+        "proxima_rotina_sugerida": 1449,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1449,
+        "nome": "Lançar Despesas de Viagem",
+        "explicacao": "Lança despesas de viagem (pedágio, alimentação) na nota fiscal de frete.",
+        "proxima_rotina_sugerida": 1408,
+        "dependencias": [1441]
+      },
+      {
+        "codigo": 1450,
+        "nome": "Gerar Conhecimento de Frete - Op. Log.",
+        "explicacao": "Gera CT-e para operador logístico (terceiros).",
+        "proxima_rotina_sugerida": 1451,
+        "dependencias": [1441]
+      },
+      {
+        "codigo": 1451,
+        "nome": "Emitir Conhecimento de Frete - Op. Log.",
+        "explicacao": "Emite CT-e para operador logístico.",
+        "proxima_rotina_sugerida": 1463,
+        "dependencias": [1450]
+      },
+      {
+        "codigo": 1452,
+        "nome": "Emitir documento fiscal eletrônico",
+        "explicacao": "Emite documento fiscal eletrônico (NF-e, CT-e, MDF-e) já autorizado pela SEFAZ.",
+        "proxima_rotina_sugerida": 1456,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1453,
+        "nome": "Consultar notas fiscais canceladas",
+        "explicacao": "Consulta histórico de notas fiscais canceladas.",
+        "proxima_rotina_sugerida": 1410,
+        "dependencias": [1409]
+      },
+      {
+        "codigo": 1454,
+        "nome": "Consultar Corte de Mercadorias",
+        "explicacao": "Consulta cortes de mercadorias realizados (reserva de estoque).",
+        "proxima_rotina_sugerida": 1462,
+        "dependencias": [1401]
+      },
+      {
+        "codigo": 1455,
+        "nome": "Manifesto Eletrônico de Documentos",
+        "explicacao": "Manifesta eletronicamente documentos fiscais (ciência, operação, desconhecimento).",
+        "proxima_rotina_sugerida": 1501,
+        "dependencias": [1095]
+      },
+      {
+        "codigo": 1456,
+        "nome": "Inutilizar Numeração de NF-e",
+        "explicacao": "Inutiliza uma faixa de numeração de NF-e não utilizada (obrigação fiscal).",
+        "proxima_rotina_sugerida": 1458,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1457,
+        "nome": "Consultar nota fiscal de saída",
+        "explicacao": "Consulta notas fiscais de saída emitidas.",
+        "proxima_rotina_sugerida": 1454,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1458,
+        "nome": "Mensagem Adicional NF-e",
+        "explicacao": "Adiciona mensagem complementar ou de interesse do fisco na NF-e.",
+        "proxima_rotina_sugerida": 1460,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1459,
+        "nome": "Expedição Para Venda Assistida",
+        "explicacao": "Processa expedição para venda assistida (PDV com entrega posterior).",
+        "proxima_rotina_sugerida": 1442,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1460,
+        "nome": "Pré-Cadastro de NF-e",
+        "explicacao": "Pré-cadastra informações da NF-e antes da transmissão.",
+        "proxima_rotina_sugerida": 1468,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1461,
+        "nome": "Manutenção do transportador da NF venda",
+        "explicacao": "Altera ou mantém dados do transportador na nota fiscal de venda.",
+        "proxima_rotina_sugerida": 1467,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1462,
+        "nome": "Gerar Arq. Embraço Fiscal (SEFAZ - AM)",
+        "explicacao": "Gera arquivo de embarço fiscal para SEFAZ Amazonas.",
+        "proxima_rotina_sugerida": 1464,
+        "dependencias": []
+      },
+      {
+        "codigo": 1463,
+        "nome": "Cancelar conhecimento de frete - Op. log",
+        "explicacao": "Cancela CT-e emitido por operador logístico.",
+        "proxima_rotina_sugerida": 1479,
+        "dependencias": [1445]
+      },
+      {
+        "codigo": 1464,
+        "nome": "Apuração faturamento",
+        "explicacao": "Relatório de apuração do faturamento (valores totais, impostos).",
+        "proxima_rotina_sugerida": 1465,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1465,
+        "nome": "Acompanhar supervisor (faturamento)",
+        "explicacao": "Acompanha indicadores de faturamento por supervisor.",
+        "proxima_rotina_sugerida": 1453,
+        "dependencias": [516]
+      },
+      {
+        "codigo": 1467,
+        "nome": "Conferência para termo de garantia",
+        "explicacao": "Confere dados para emissão de termo de garantia (extensão).",
+        "proxima_rotina_sugerida": 1423,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1468,
+        "nome": "Configurar impressora matricial (NF-e)",
+        "explicacao": "Configura impressora matricial para DANFE.",
+        "proxima_rotina_sugerida": 1476,
+        "dependencias": []
+      },
+      {
+        "codigo": 1469,
+        "nome": "Liberar notas com filial retira para NFE",
+        "explicacao": "Libera notas fiscais com filial de retirada para transmissão à SEFAZ.",
+        "proxima_rotina_sugerida": 1403,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1470,
+        "nome": "Devolução de transf. filial retira",
+        "explicacao": "Registra devolução de transferência com filial de retirada.",
+        "proxima_rotina_sugerida": 1450,
+        "dependencias": [1423]
+      },
+      {
+        "codigo": 1474,
+        "nome": "Emissão do Conhecimento de Transporte Eletrônico",
+        "explicacao": "Emite CT-e eletrônico (mesma funcionalidade da 1441).",
+        "proxima_rotina_sugerida": 1477,
+        "dependencias": [1441]
+      },
+      {
+        "codigo": 1476,
+        "nome": "Cadastro de Layout de NF-e",
+        "explicacao": "Cadastra layouts customizados para DANFE.",
+        "proxima_rotina_sugerida": 1474,
+        "dependencias": []
+      },
+      {
+        "codigo": 1477,
+        "nome": "Emissão da Carta de Correção Eletrônica",
+        "explicacao": "Emite carta de correção eletrônica (CC-e) para NF-e (correção de informações).",
+        "proxima_rotina_sugerida": 1455,
+        "dependencias": [1067]
+      },
+      {
+        "codigo": 1479,
+        "nome": "Gerar Ct-e Complementar",
+        "explicacao": "Gera CT-e complementar para valores adicionais (ex: pedágio).",
+        "proxima_rotina_sugerida": 1452,
+        "dependencias": [1441]
+      }
+    ]
+  }
+}

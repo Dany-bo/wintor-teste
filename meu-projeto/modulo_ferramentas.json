@@ -1,0 +1,199 @@
+{
+  "modulo": {
+    "nome": "FERRAMENTAS DO SISTEMA",
+    "codigo_modulo": 8,
+    "descricao_geral": "Módulo de ferramentas administrativas e de desenvolvimento do WinThor. Inclui geradores de relatórios, consultas SQL, indicadores de desempenho (KPIs), inventário de rotinas, atualizações de banco de dados, agendamento de tarefas, controle de perfis de usuário, integração LDAP e outras utilidades para suporte e gestão do sistema.",
+    "fluxo_principal": "Cadastros de ferramentas → Geração de relatórios e KPIs → Agendamentos → Atualizações de banco → Controle de acesso",
+    "rotinas": [
+      {
+        "codigo": 851,
+        "nome": "Gerador de relatório",
+        "explicacao": "Ferramenta genérica para criação de relatórios customizados, permitindo selecionar campos, filtros, ordenações e formatos de saída (tela, impressora, arquivo).",
+        "proxima_rotina_sugerida": 860,
+        "dependencias": []
+      },
+      {
+        "codigo": 860,
+        "nome": "Consulta SQL",
+        "explicacao": "Permite executar consultas SQL diretamente no banco de dados. Ferramenta avançada para extração de dados e diagnósticos.",
+        "proxima_rotina_sugerida": 800,
+        "dependencias": []
+      },
+      {
+        "codigo": 800,
+        "nome": "Gerador de relatórios",
+        "explicacao": "Interface avançada para geração de relatórios, com opções de layout, agrupamentos, totais e gráficos.",
+        "proxima_rotina_sugerida": 852,
+        "dependencias": [851]
+      },
+      {
+        "codigo": 852,
+        "nome": "Cadastro de KPI",
+        "explicacao": "Cadastra indicadores-chave de desempenho (KPIs) para monitoramento gerencial. Define fórmula, meta, periodicidade e responsável.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 888,
+        "nome": "Inventário de rotinas",
+        "explicacao": "Levantamento e listagem de todas as rotinas disponíveis no sistema, com seus códigos, nomes e módulos.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 814,
+        "nome": "Atualização de objeto de banco de dados",
+        "explicacao": "Atualiza objetos de banco de dados (tabelas, views, functions, triggers, procedures) para novas versões.",
+        "proxima_rotina_sugerida": 880,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 880,
+        "nome": "Agendar atualizações automáticas",
+        "explicacao": "Agenda a execução automática de atualizações e processos em lote, definindo data, hora e frequência.",
+        "proxima_rotina_sugerida": 801,
+        "dependencias": [814]
+      },
+      {
+        "codigo": 801,
+        "nome": "Atualização de Serviços Web",
+        "explicacao": "Atualiza serviços web utilizados pelo sistema para comunicação com APIs externas.",
+        "proxima_rotina_sugerida": 802,
+        "dependencias": []
+      },
+      {
+        "codigo": 802,
+        "nome": "Controle de Perfil de Usuário",
+        "explicacao": "Gerencia perfis de usuário e suas permissões associadas, permitindo criar, alterar ou excluir perfis.",
+        "proxima_rotina_sugerida": 804,
+        "dependencias": [599]
+      },
+      {
+        "codigo": 804,
+        "nome": "Configurações LDAP",
+        "explicacao": "Configura integração com LDAP (Active Directory) para autenticação centralizada de usuários.",
+        "proxima_rotina_sugerida": 803,
+        "dependencias": []
+      },
+      {
+        "codigo": 803,
+        "nome": "Gerenciamento de agendamentos",
+        "explicacao": "Gerencia tarefas agendadas (backup, atualizações, processamentos) e seus logs de execução.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [880]
+      },
+      {
+        "codigo": 500,
+        "nome": "Atualizar Procedure",
+        "explicacao": "Atualiza procedures armazenadas no banco de dados (stored procedures).",
+        "proxima_rotina_sugerida": 504,
+        "dependencias": []
+      },
+      {
+        "codigo": 504,
+        "nome": "Atualização Diária I",
+        "explicacao": "Processa rotinas de atualização diária do sistema (primeira parte).",
+        "proxima_rotina_sugerida": 506,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 506,
+        "nome": "Atualização Mensal",
+        "explicacao": "Executa processos de atualização mensal, como fechamento de períodos e recálculo de índices.",
+        "proxima_rotina_sugerida": 507,
+        "dependencias": [504]
+      },
+      {
+        "codigo": 507,
+        "nome": "Atualização Eventual",
+        "explicacao": "Executa atualizações esporádicas e não agendadas, conforme necessidade.",
+        "proxima_rotina_sugerida": 552,
+        "dependencias": [506]
+      },
+      {
+        "codigo": 552,
+        "nome": "Atualização Diária II",
+        "explicacao": "Complemento da atualização diária (segunda parte), com rotinas adicionais.",
+        "proxima_rotina_sugerida": 560,
+        "dependencias": [504]
+      },
+      {
+        "codigo": 560,
+        "nome": "Atualizar Banco de Dados",
+        "explicacao": "Aplica scripts de atualização na estrutura do banco de dados (tabelas, campos, índices).",
+        "proxima_rotina_sugerida": 579,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 579,
+        "nome": "Atualizar Versão WinThor",
+        "explicacao": "Executa o processo de atualização de versão do sistema WinThor.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [560]
+      },
+      {
+        "codigo": 538,
+        "nome": "Auditar PCNFSAID x PCMOV",
+        "explicacao": "Audita inconsistências entre notas fiscais de saída e movimentos de estoque.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [1301, 316]
+      },
+      {
+        "codigo": 566,
+        "nome": "Imprimir Estrutura do Banco de Dados",
+        "explicacao": "Imprime um relatório da estrutura de tabelas, relacionamentos e índices do banco de dados.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 568,
+        "nome": "Verificar Integridade dos Dados",
+        "explicacao": "Verifica inconsistências e quebra de integridade referencial no banco de dados.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 551,
+        "nome": "Lock de banco",
+        "explicacao": "Gerencia locks (travas) no banco de dados para evitar conflitos de concorrência.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 851,
+        "nome": "Gerador de relatório",
+        "explicacao": "Ferramenta genérica para criação de relatórios customizados.",
+        "proxima_rotina_sugerida": 860,
+        "dependencias": []
+      },
+      {
+        "codigo": 860,
+        "nome": "Consulta SQL",
+        "explicacao": "Executa consultas SQL diretamente no banco.",
+        "proxima_rotina_sugerida": 800,
+        "dependencias": []
+      },
+      {
+        "codigo": 800,
+        "nome": "Gerador de relatórios",
+        "explicacao": "Interface avançada para geração de relatórios.",
+        "proxima_rotina_sugerida": 852,
+        "dependencias": [851]
+      },
+      {
+        "codigo": 852,
+        "nome": "Cadastro de KPI",
+        "explicacao": "Cadastra indicadores-chave de desempenho.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 888,
+        "nome": "Inventário de rotinas",
+        "explicacao": "Lista todas as rotinas do sistema.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      }
+    ]
+  }
+}

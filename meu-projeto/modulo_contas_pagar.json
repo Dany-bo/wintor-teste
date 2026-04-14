@@ -1,0 +1,731 @@
+{
+  "modulo": {
+    "nome": "CONTAS A PAGAR",
+    "codigo_modulo": 7,
+    "descricao_geral": "Gerencia as obrigações financeiras da empresa, controlando títulos a pagar a fornecedores, provisões, prorrogações, adiantamentos, fluxo de pagamentos, conciliações e emissão de relatórios gerenciais e contábeis.",
+    "fluxo_principal": "Cadastros (Bancos, Contratos) → Inclusão de Títulos (749) → Provisões (747) → Desdobramento (737) / Prorrogação (744) → Baixa / Pagamento → Relatórios",
+    "rotinas": [
+      {
+        "codigo": 749,
+        "nome": "Incluir Título a Pagar",
+        "explicacao": "Rotina principal para inclusão manual de títulos a pagar. Permite registrar débitos avulsos que não se originam de notas fiscais (ex: fretes, aluguéis) ou complementos.",
+        "proxima_rotina_sugerida": 750,
+        "dependencias": [202, 203]
+      },
+      {
+        "codigo": 750,
+        "nome": "Consultar/Alterar Título a Pagar",
+        "explicacao": "Permite consultar títulos por diversos filtros (fornecedor, período, situação) e alterar informações de títulos ainda não baixados, como valor, vencimento ou histórico.",
+        "proxima_rotina_sugerida": 703,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 703,
+        "nome": "Reclassificação de Contas a Pagar",
+        "explicacao": "Reclassifica títulos a pagar, alterando a conta contábil de um lançamento já efetuado.",
+        "proxima_rotina_sugerida": 737,
+        "dependencias": [749, 750]
+      },
+      {
+        "codigo": 737,
+        "nome": "Desdobrar Título a Pagar",
+        "explicacao": "Divide um título em vários menores. Utilizado para ratear valores entre centros de custo ou produtos, ou para renegociar parcelamento da dívida.",
+        "proxima_rotina_sugerida": 744,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 744,
+        "nome": "Prorrogar Título a Pagar",
+        "explicacao": "Altera a data de vencimento de um título a pagar. Utilizado para renegociação de prazos com fornecedores.",
+        "proxima_rotina_sugerida": 747,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 747,
+        "nome": "Cadastrar Provisões Mensais",
+        "explicacao": "Cadastra provisões mensais para despesas que ocorrem regularmente, como aluguéis, energia, telefone, etc.",
+        "proxima_rotina_sugerida": 748,
+        "dependencias": []
+      },
+      {
+        "codigo": 748,
+        "nome": "Gerar Lançamentos de Provisão",
+        "explicacao": "Gera os lançamentos das provisões cadastradas na rotina 747.",
+        "proxima_rotina_sugerida": 765,
+        "dependencias": [747]
+      },
+      {
+        "codigo": 765,
+        "nome": "Acompanhar fornecedor",
+        "explicacao": "Relatório de acompanhamento de fornecedores, com informações de compras, prazos de pagamento e títulos em aberto.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 755,
+        "nome": "Lançar orçamento",
+        "explicacao": "Lançamento de orçamento para controle de despesas futuras, sem geração de títulos.",
+        "proxima_rotina_sugerida": 780,
+        "dependencias": []
+      },
+      {
+        "codigo": 780,
+        "nome": "Manter título a pagar",
+        "explicacao": "Manutenção geral de títulos a pagar, permitindo ações em lote.",
+        "proxima_rotina_sugerida": 775,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 775,
+        "nome": "Gerir Contas a Pagar",
+        "explicacao": "Ferramenta avançada para gestão de contas a pagar, oferecendo visão consolidada e ações em lote.",
+        "proxima_rotina_sugerida": 776,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 776,
+        "nome": "Integração MyFrota",
+        "explicacao": "Integração com o sistema MyFrota para gestão de despesas com frotas de veículos.",
+        "proxima_rotina_sugerida": 777,
+        "dependencias": []
+      },
+      {
+        "codigo": 777,
+        "nome": "Integração RM",
+        "explicacao": "Integração com o sistema RM (Recursos Humanos) da TOTVS.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 734,
+        "nome": "Relatório de borderô não baixado",
+        "explicacao": "Relatório de borderôs de cheques que ainda não foram baixados.",
+        "proxima_rotina_sugerida": 740,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 740,
+        "nome": "Gerar Arq. Magnético CNAB 240",
+        "explicacao": "Gera arquivo magnético no padrão CNAB 240 para pagamento de títulos a fornecedores.",
+        "proxima_rotina_sugerida": 769,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 769,
+        "nome": "Baixa arquivo magnético GNRE",
+        "explicacao": "Processa o arquivo de retorno (baixa) do arquivo magnético de GNRE gerado.",
+        "proxima_rotina_sugerida": 706,
+        "dependencias": [740]
+      },
+      {
+        "codigo": 706,
+        "nome": "Gravar código de barras C. pagar (DDA)",
+        "explicacao": "Grava código de barras de títulos a pagar para uso no DDA (Débito Direto Autorizado).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 717,
+        "nome": "Contas a Pagar",
+        "explicacao": "Relatório de contas a pagar, listando títulos pendentes.",
+        "proxima_rotina_sugerida": 718,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 718,
+        "nome": "Contas Pagas",
+        "explicacao": "Relatório de contas pagas em determinado período.",
+        "proxima_rotina_sugerida": 728,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 728,
+        "nome": "Contas Lançadas",
+        "explicacao": "Relatório de contas lançadas (incluídas) em determinado período.",
+        "proxima_rotina_sugerida": 725,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 725,
+        "nome": "Título Prorrogado",
+        "explicacao": "Relatório de títulos prorrogados.",
+        "proxima_rotina_sugerida": 719,
+        "dependencias": [744]
+      },
+      {
+        "codigo": 719,
+        "nome": "Extrato do Fornecedor",
+        "explicacao": "Extrato detalhado de títulos por fornecedor.",
+        "proxima_rotina_sugerida": 720,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 720,
+        "nome": "Extrato do Fornecedor Principal",
+        "explicacao": "Extrato consolidado do fornecedor principal.",
+        "proxima_rotina_sugerida": 763,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 763,
+        "nome": "Balancete Despesas 12 Meses",
+        "explicacao": "Balancete de despesas por fornecedor nos últimos 12 meses.",
+        "proxima_rotina_sugerida": 739,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 739,
+        "nome": "Relatório do Contas a Pagar",
+        "explicacao": "Relatório gerencial de contas a pagar.",
+        "proxima_rotina_sugerida": 742,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 742,
+        "nome": "Relatório de Fretes",
+        "explicacao": "Relatório de fretes a pagar.",
+        "proxima_rotina_sugerida": 766,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 766,
+        "nome": "Rel. Acompanhamento Fornecedores",
+        "explicacao": "Relatório de acompanhamento de fornecedores.",
+        "proxima_rotina_sugerida": 768,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 768,
+        "nome": "Histórico de desdobramento de contas a pagar",
+        "explicacao": "Histórico de desdobramentos de títulos.",
+        "proxima_rotina_sugerida": 771,
+        "dependencias": [737]
+      },
+      {
+        "codigo": 771,
+        "nome": "Relatório de Movimentação de Fornecedores",
+        "explicacao": "Relatório de movimentação financeira por fornecedor.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 723,
+        "nome": "Ficha de Contas a Pagar",
+        "explicacao": "Ficha detalhada de cada título a pagar.",
+        "proxima_rotina_sugerida": 724,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 724,
+        "nome": "Carta de Prorrogação",
+        "explicacao": "Emite carta de prorrogação para fornecedor.",
+        "proxima_rotina_sugerida": 726,
+        "dependencias": [744]
+      },
+      {
+        "codigo": 726,
+        "nome": "Carta de Atraso na Entrega",
+        "explicacao": "Emite carta de atraso na entrega.",
+        "proxima_rotina_sugerida": 727,
+        "dependencias": []
+      },
+      {
+        "codigo": 727,
+        "nome": "Carta de Devolução Parcial",
+        "explicacao": "Emite carta de devolução parcial de mercadoria.",
+        "proxima_rotina_sugerida": 732,
+        "dependencias": []
+      },
+      {
+        "codigo": 732,
+        "nome": "Recibo de Pagamento",
+        "explicacao": "Emite recibo de pagamento de título.",
+        "proxima_rotina_sugerida": 735,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 735,
+        "nome": "Recibo de Pagamento de Autônomo (RPA)",
+        "explicacao": "Emite recibo de pagamento a autônomo (RPA).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 746,
+        "nome": "Controle de adiantamento ao fornecedor",
+        "explicacao": "Controla adiantamentos realizados a fornecedores.",
+        "proxima_rotina_sugerida": 767,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 767,
+        "nome": "Estorno de baixa de títulos de adiant. a fornecedor",
+        "explicacao": "Estorna baixa de títulos de adiantamento a fornecedor.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [746]
+      },
+      {
+        "codigo": 760,
+        "nome": "Autorizar lançamentos",
+        "explicacao": "Autoriza lançamentos de contas a pagar que exigem aprovação.",
+        "proxima_rotina_sugerida": 772,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 772,
+        "nome": "Cadastrar Contrato de Câmbio",
+        "explicacao": "Cadastra contrato de câmbio para operações de importação/exportação.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 781,
+        "nome": "Encerramento de período Financeiro",
+        "explicacao": "Encerra período financeiro, impedindo lançamentos futuros.",
+        "proxima_rotina_sugerida": 782,
+        "dependencias": []
+      },
+      {
+        "codigo": 782,
+        "nome": "Prestação De Contas",
+        "explicacao": "Rotina para prestação de contas de adiantamentos.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [746]
+      },
+      {
+        "codigo": 1000,
+        "nome": "Processamentos Fiscais",
+        "explicacao": "Processamentos fiscais diversos.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1011,
+        "nome": "Geração Integração Contábil",
+        "explicacao": "Gera integração contábil do módulo de contas a pagar.",
+        "proxima_rotina_sugerida": 1012,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 1012,
+        "nome": "Geração arquivo TARE - DF",
+        "explicacao": "Gera arquivo TARE para o Distrito Federal.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1001,
+        "nome": "Livro de Registro de Entrada",
+        "explicacao": "Livro de registro de entrada de notas fiscais.",
+        "proxima_rotina_sugerida": 1003,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1003,
+        "nome": "Livro de Registro de Saída",
+        "explicacao": "Livro de registro de saída de notas fiscais.",
+        "proxima_rotina_sugerida": 1023,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1023,
+        "nome": "Livro de registro de entrada/saída - dia",
+        "explicacao": "Livro de registro de entrada e saída diário.",
+        "proxima_rotina_sugerida": 1089,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1089,
+        "nome": "Livro Reg. Prestação de Serviço",
+        "explicacao": "Livro de registro de prestação de serviço.",
+        "proxima_rotina_sugerida": 1024,
+        "dependencias": []
+      },
+      {
+        "codigo": 1024,
+        "nome": "Livro reg. apuração do ICMS/ST-Parte I",
+        "explicacao": "Livro de apuração do ICMS/ST - Parte I.",
+        "proxima_rotina_sugerida": 1025,
+        "dependencias": []
+      },
+      {
+        "codigo": 1025,
+        "nome": "Livro reg. apuração do ICMS/ST-Parte II",
+        "explicacao": "Livro de apuração do ICMS/ST - Parte II.",
+        "proxima_rotina_sugerida": 1035,
+        "dependencias": []
+      },
+      {
+        "codigo": 1035,
+        "nome": "Livro reg. apuração do TARE - DF",
+        "explicacao": "Livro de apuração do TARE para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1013,
+        "dependencias": []
+      },
+      {
+        "codigo": 1013,
+        "nome": "Livros Fiscais de IPI",
+        "explicacao": "Livros fiscais de IPI.",
+        "proxima_rotina_sugerida": 1010,
+        "dependencias": []
+      },
+      {
+        "codigo": 1010,
+        "nome": "Livro de Registro de Inventário",
+        "explicacao": "Livro de registro de inventário.",
+        "proxima_rotina_sugerida": 1070,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1070,
+        "nome": "Livro Reg. de Controle de Produção/Estoque",
+        "explicacao": "Livro de registro de controle de produção e estoque.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [1127]
+      },
+      {
+        "codigo": 1051,
+        "nome": "Gerar Notas Fiscais",
+        "explicacao": "Geração de notas fiscais.",
+        "proxima_rotina_sugerida": 1036,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1036,
+        "nome": "Geração Arquivo GIAM - TO",
+        "explicacao": "Geração de arquivo GIAM para o Tocantins.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1002,
+        "nome": "Resumo livro de entrada",
+        "explicacao": "Resumo do livro de registro de entrada.",
+        "proxima_rotina_sugerida": 1004,
+        "dependencias": [1001]
+      },
+      {
+        "codigo": 1004,
+        "nome": "Resumo livro de saída",
+        "explicacao": "Resumo do livro de registro de saída.",
+        "proxima_rotina_sugerida": 1006,
+        "dependencias": [1003]
+      },
+      {
+        "codigo": 1006,
+        "nome": "Relação Fornecedores - Livro Entrada",
+        "explicacao": "Relação de fornecedores do livro de entrada.",
+        "proxima_rotina_sugerida": 1020,
+        "dependencias": [202, 1001]
+      },
+      {
+        "codigo": 1020,
+        "nome": "Termo de Abertura e Encerramento",
+        "explicacao": "Termo de abertura e encerramento de livros fiscais.",
+        "proxima_rotina_sugerida": 1005,
+        "dependencias": []
+      },
+      {
+        "codigo": 1005,
+        "nome": "Calendário de obrigações fiscais",
+        "explicacao": "Calendário de obrigações fiscais.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 1007,
+        "nome": "Manutenção de nota fiscal de entrada",
+        "explicacao": "Manutenção de notas fiscais de entrada.",
+        "proxima_rotina_sugerida": 1008,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1008,
+        "nome": "Manutenção de nota fiscal de saída",
+        "explicacao": "Manutenção de notas fiscais de saída.",
+        "proxima_rotina_sugerida": 1064,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1064,
+        "nome": "Manutenção de Reduções Z",
+        "explicacao": "Manutenção de reduções Z (ECF).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1017,
+        "nome": "Relatórios para fins de Ressarcimento",
+        "explicacao": "Relatórios para fins de ressarcimento de ICMS.",
+        "proxima_rotina_sugerida": 1026,
+        "dependencias": []
+      },
+      {
+        "codigo": 1026,
+        "nome": "Relatório de Saídas com ST",
+        "explicacao": "Relatório de saídas com Substituição Tributária.",
+        "proxima_rotina_sugerida": 1027,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1027,
+        "nome": "Relatório de Dev. Clientes com ST",
+        "explicacao": "Relatório de devoluções de clientes com ST.",
+        "proxima_rotina_sugerida": 1041,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1041,
+        "nome": "Relatório de Produtos para Ressarcimento",
+        "explicacao": "Relatório de produtos para ressarcimento de ICMS.",
+        "proxima_rotina_sugerida": 1063,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1063,
+        "nome": "Relatório de Ressarcimento - DF",
+        "explicacao": "Relatório de ressarcimento para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1076,
+        "dependencias": []
+      },
+      {
+        "codigo": 1076,
+        "nome": "Relatório de Entradas com ST",
+        "explicacao": "Relatório de entradas com Substituição Tributária.",
+        "proxima_rotina_sugerida": 1058,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1058,
+        "nome": "Relatório de Inventário com ST",
+        "explicacao": "Relatório de inventário com ST.",
+        "proxima_rotina_sugerida": 1062,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1062,
+        "nome": "Relatório de Entradas - PIS/COFINS",
+        "explicacao": "Relatório de entradas para PIS/COFINS.",
+        "proxima_rotina_sugerida": 1054,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1054,
+        "nome": "Relatório de Devoluções - PIS/COFINS",
+        "explicacao": "Relatório de devoluções para PIS/COFINS.",
+        "proxima_rotina_sugerida": 1042,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1042,
+        "nome": "Relatório de Saídas - PIS/COFINS",
+        "explicacao": "Relatório de saídas para PIS/COFINS.",
+        "proxima_rotina_sugerida": 1022,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1022,
+        "nome": "Relatório de apoio DIFAL - ICMS PARTILHA",
+        "explicacao": "Relatório de apoio para DIFAL (Partilha do ICMS).",
+        "proxima_rotina_sugerida": 1080,
+        "dependencias": []
+      },
+      {
+        "codigo": 1080,
+        "nome": "Relatório Aux. Produtos - PIS/COFINS",
+        "explicacao": "Relatório auxiliar de produtos para PIS/COFINS.",
+        "proxima_rotina_sugerida": 1096,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1096,
+        "nome": "Relatório Apoio Conferência Informações",
+        "explicacao": "Relatório de apoio à conferência de informações fiscais.",
+        "proxima_rotina_sugerida": 1057,
+        "dependencias": []
+      },
+      {
+        "codigo": 1057,
+        "nome": "Relatório de auditoria",
+        "explicacao": "Relatório de auditoria de títulos a pagar.",
+        "proxima_rotina_sugerida": 1082,
+        "dependencias": [749]
+      },
+      {
+        "codigo": 1082,
+        "nome": "Diário Auxiliar de Contas a Receber",
+        "explicacao": "Diário auxiliar de contas a receber.",
+        "proxima_rotina_sugerida": 1075,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1075,
+        "nome": "Validação de Dados Fiscais - SEFAZ",
+        "explicacao": "Validação de dados fiscais junto à SEFAZ.",
+        "proxima_rotina_sugerida": 1018,
+        "dependencias": []
+      },
+      {
+        "codigo": 1018,
+        "nome": "Relatório de ICMS Antecipado",
+        "explicacao": "Relatório de ICMS antecipado.",
+        "proxima_rotina_sugerida": 1050,
+        "dependencias": []
+      },
+      {
+        "codigo": 1050,
+        "nome": "Razão Analítico Cliente",
+        "explicacao": "Razão analítico por cliente.",
+        "proxima_rotina_sugerida": 1072,
+        "dependencias": [302]
+      },
+      {
+        "codigo": 1072,
+        "nome": "Relatórios de Apoio a Conferencia Apuração",
+        "explicacao": "Relatórios de apoio à conferência de apuração.",
+        "proxima_rotina_sugerida": 1045,
+        "dependencias": []
+      },
+      {
+        "codigo": 1045,
+        "nome": "Razão Analítico Fornecedor",
+        "explicacao": "Razão analítico por fornecedor.",
+        "proxima_rotina_sugerida": 1047,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 1047,
+        "nome": "Conferência de Dados Fiscais",
+        "explicacao": "Conferência de dados fiscais.",
+        "proxima_rotina_sugerida": 1031,
+        "dependencias": []
+      },
+      {
+        "codigo": 1031,
+        "nome": "Relatórios Específicos por Estado",
+        "explicacao": "Relatórios específicos por estado.",
+        "proxima_rotina_sugerida": 1071,
+        "dependencias": []
+      },
+      {
+        "codigo": 1071,
+        "nome": "Relatório ICMS s/ Frete",
+        "explicacao": "Relatório de ICMS sobre frete.",
+        "proxima_rotina_sugerida": 1079,
+        "dependencias": []
+      },
+      {
+        "codigo": 1079,
+        "nome": "Relatório Produtos - Controle Especial",
+        "explicacao": "Relatório de produtos com controle especial.",
+        "proxima_rotina_sugerida": 1033,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1033,
+        "nome": "Relatório GI/ICMS Entrada / Saída",
+        "explicacao": "Relatório GI/ICMS de entrada e saída.",
+        "proxima_rotina_sugerida": 1078,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1078,
+        "nome": "Resumo de Vendas",
+        "explicacao": "Resumo de vendas.",
+        "proxima_rotina_sugerida": 1029,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 1029,
+        "nome": "Resumo Diário por Alíquotas",
+        "explicacao": "Resumo diário por alíquotas.",
+        "proxima_rotina_sugerida": 1028,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1028,
+        "nome": "Resumo de Saídas por CFOP/Tipo Venda",
+        "explicacao": "Resumo de saídas por CFOP e tipo de venda.",
+        "proxima_rotina_sugerida": 1055,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1055,
+        "nome": "Títulos Faturados por Cobrança",
+        "explicacao": "Títulos faturados por cobrança.",
+        "proxima_rotina_sugerida": 1040,
+        "dependencias": [1206]
+      },
+      {
+        "codigo": 1040,
+        "nome": "Livro Reg. de Controle de Produção",
+        "explicacao": "Livro de registro de controle de produção.",
+        "proxima_rotina_sugerida": 1014,
+        "dependencias": [1127]
+      },
+      {
+        "codigo": 1014,
+        "nome": "Relatório de Saídas por tributação",
+        "explicacao": "Relatório de saídas por tipo de tributação.",
+        "proxima_rotina_sugerida": 1092,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1092,
+        "nome": "Detalhamento de entradas/saídas - dia/CFOP",
+        "explicacao": "Detalhamento de entradas e saídas por dia e CFOP.",
+        "proxima_rotina_sugerida": 1037,
+        "dependencias": [1001, 1003]
+      },
+      {
+        "codigo": 1037,
+        "nome": "Relatório de DARE recolher",
+        "explicacao": "Relatório de DARE a recolher.",
+        "proxima_rotina_sugerida": 1067,
+        "dependencias": []
+      },
+      {
+        "codigo": 1067,
+        "nome": "Emissão de carta de correção",
+        "explicacao": "Emissão de carta de correção para NF-e.",
+        "proxima_rotina_sugerida": 1061,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1061,
+        "nome": "Resumo de faturamento TARE - DF",
+        "explicacao": "Resumo de faturamento TARE para o Distrito Federal.",
+        "proxima_rotina_sugerida": 1016,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1016,
+        "nome": "Gerador de relatório fiscal",
+        "explicacao": "Gerador de relatórios fiscais.",
+        "proxima_rotina_sugerida": 1087,
+        "dependencias": []
+      },
+      {
+        "codigo": 1087,
+        "nome": "Apuração ICMS fomentar",
+        "explicacao": "Apuração de ICMS para fomentar.",
+        "proxima_rotina_sugerida": 1060,
+        "dependencias": []
+      },
+      {
+        "codigo": 1060,
+        "nome": "Relatório termo de acordo - ES",
+        "explicacao": "Relatório de termo de acordo para o Espírito Santo.",
+        "proxima_rotina_sugerida": 1094,
+        "dependencias": []
+      },
+      {
+        "codigo": 1094,
+        "nome": "Auditoria de venda triangular",
+        "explicacao": "Auditoria de venda triangular.",
+        "proxima_rotina_sugerida": 1011,
+        "dependencias": [316]
+      }
+    ]
+  }
+}

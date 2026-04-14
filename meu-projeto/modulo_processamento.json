@@ -1,0 +1,479 @@
+{
+  "modulo": {
+    "nome": "PROCESSAMENTO",
+    "codigo_modulo": 5,
+    "descricao_geral": "Módulo de Processamento do WinThor. Gerencia a manutenção de tabelas comerciais, parâmetros de processamento, controle de acesso, atualizações de banco de dados, rotinas de conciliação e integrações.",
+    "fluxo_principal": "Cadastros de funcionários e rotinas → Permissões de acesso → Atualizações de banco → Processamentos diários/mensais → Relatórios",
+    "rotinas": [
+      {
+        "codigo": 528,
+        "nome": "Cadastrar Funcionário/Setor",
+        "explicacao": "Cadastra funcionários e associa a setores/departamentos. Essencial para controle de acesso, comissões e permissões.",
+        "proxima_rotina_sugerida": 529,
+        "dependencias": []
+      },
+      {
+        "codigo": 529,
+        "nome": "Cadastrar Rotina do Sistema",
+        "explicacao": "Registra as rotinas do sistema no menu, permitindo organização hierárquica e controle de permissões.",
+        "proxima_rotina_sugerida": 530,
+        "dependencias": []
+      },
+      {
+        "codigo": 530,
+        "nome": "Permitir Acesso a Rotina",
+        "explicacao": "Define quais usuários ou grupos têm permissão para executar cada rotina do sistema. É a base da segurança.",
+        "proxima_rotina_sugerida": 537,
+        "dependencias": [528, 529]
+      },
+      {
+        "codigo": 537,
+        "nome": "Consultar Permissão de Acesso por Rotina",
+        "explicacao": "Consulta as permissões atribuídas a cada rotina, útil para auditoria e ajustes.",
+        "proxima_rotina_sugerida": 562,
+        "dependencias": [530]
+      },
+      {
+        "codigo": 562,
+        "nome": "Estatística de uso do Sistema",
+        "explicacao": "Relatório que mostra quais rotinas foram mais utilizadas e por quais usuários, auxiliando na análise de produtividade.",
+        "proxima_rotina_sugerida": 576,
+        "dependencias": []
+      },
+      {
+        "codigo": 576,
+        "nome": "Emitir Rotinas Utilizadas por Func.",
+        "explicacao": "Relatório detalhado das rotinas executadas por cada funcionário em um período específico.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [562]
+      },
+      {
+        "codigo": 586,
+        "nome": "Filtrar Relação de Clientes por RCA",
+        "explicacao": "Relatório que filtra clientes por vendedor (RCA).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [302, 517]
+      },
+      {
+        "codigo": 588,
+        "nome": "Integração c/ Cia Brasileira Distr. CBD",
+        "explicacao": "Integração específica com a distribuidora CBD.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 591,
+        "nome": "Configurar impressora",
+        "explicacao": "Configura impressoras para emissão de relatórios e documentos fiscais.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 542,
+        "nome": "Permitir biometria digital",
+        "explicacao": "Habilita o uso de biometria digital para autenticação de usuários.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [528]
+      },
+      {
+        "codigo": 594,
+        "nome": "Exportar Dados Alpargatas",
+        "explicacao": "Exporta dados no formato exigido pela Alpargatas.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 595,
+        "nome": "Contrato",
+        "explicacao": "Gerencia contratos comerciais com clientes ou fornecedores.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 599,
+        "nome": "Cadastro de papeis de usuário",
+        "explicacao": "Define papéis (perfis) de usuário com permissões agrupadas.",
+        "proxima_rotina_sugerida": 530,
+        "dependencias": []
+      },
+      {
+        "codigo": 500,
+        "nome": "Atualizar Procedure",
+        "explicacao": "Atualiza procedures armazenadas no banco de dados.",
+        "proxima_rotina_sugerida": 504,
+        "dependencias": []
+      },
+      {
+        "codigo": 504,
+        "nome": "Atualização Diária I",
+        "explicacao": "Rotina de atualização diária do sistema (primeira parte).",
+        "proxima_rotina_sugerida": 506,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 506,
+        "nome": "Atualização Mensal",
+        "explicacao": "Processa atualizações que devem ocorrer mensalmente (fechamento, índices).",
+        "proxima_rotina_sugerida": 507,
+        "dependencias": [504]
+      },
+      {
+        "codigo": 507,
+        "nome": "Atualização Eventual",
+        "explicacao": "Executa atualizações esporádicas, não agendadas.",
+        "proxima_rotina_sugerida": 552,
+        "dependencias": [506]
+      },
+      {
+        "codigo": 552,
+        "nome": "Atualização Diária II",
+        "explicacao": "Rotina de atualização diária (segunda parte), complementar à 504.",
+        "proxima_rotina_sugerida": 560,
+        "dependencias": [504]
+      },
+      {
+        "codigo": 560,
+        "nome": "Atualizar Banco de Dados",
+        "explicacao": "Atualiza estrutura do banco de dados (tabelas, campos, índices).",
+        "proxima_rotina_sugerida": 579,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 579,
+        "nome": "Atualizar Versão WinThor",
+        "explicacao": "Aplica atualizações de versão do sistema WinThor.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [560]
+      },
+      {
+        "codigo": 538,
+        "nome": "Auditar PCNFSAID x PCMOV",
+        "explicacao": "Audita inconsistências entre notas fiscais de saída e movimentos de estoque.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [1301, 316]
+      },
+      {
+        "codigo": 566,
+        "nome": "Imprimir Estrutura do Banco de Dados",
+        "explicacao": "Imprime a estrutura de tabelas e relacionamentos do banco de dados.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 568,
+        "nome": "Verificar Integridade dos Dados",
+        "explicacao": "Verifica inconsistências e integridade referencial no banco de dados.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 551,
+        "nome": "Lock de banco",
+        "explicacao": "Gerencia locks (travas) no banco de dados para evitar conflitos.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 604,
+        "nome": "Conciliar",
+        "explicacao": "Rotina de conciliação bancária e de caixa.",
+        "proxima_rotina_sugerida": 631,
+        "dependencias": [605]
+      },
+      {
+        "codigo": 631,
+        "nome": "Lançar Despesas ou Receitas",
+        "explicacao": "Lançamento manual de despesas e receitas não originadas de pedidos.",
+        "proxima_rotina_sugerida": 632,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 632,
+        "nome": "Transferir Numerários",
+        "explicacao": "Transfere valores entre caixas, bancos ou contas internas.",
+        "proxima_rotina_sugerida": 633,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 633,
+        "nome": "Recalcular Saldo",
+        "explicacao": "Recalcula saldos de contas correntes e estoque.",
+        "proxima_rotina_sugerida": 635,
+        "dependencias": [632]
+      },
+      {
+        "codigo": 635,
+        "nome": "Lançamento/Estorno (DNI,COBS,CHDV)",
+        "explicacao": "Lança ou estorna documentos não integrados (DNI), cobranças e cheques.",
+        "proxima_rotina_sugerida": 636,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 636,
+        "nome": "Lançar Solicitação de Verba",
+        "explicacao": "Registra solicitação de verbas promocionais ou bonificações.",
+        "proxima_rotina_sugerida": 638,
+        "dependencias": [1801]
+      },
+      {
+        "codigo": 638,
+        "nome": "Estornar Lançamentos",
+        "explicacao": "Estorna lançamentos contábeis ou financeiros já efetuados.",
+        "proxima_rotina_sugerida": 639,
+        "dependencias": [635]
+      },
+      {
+        "codigo": 639,
+        "nome": "Estornar Transferência de Numerários",
+        "explicacao": "Estorna transferências de numerários realizadas anteriormente.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [632]
+      },
+      {
+        "codigo": 623,
+        "nome": "Importar de depósitos identificados",
+        "explicacao": "Importa arquivos de depósitos bancários identificados.",
+        "proxima_rotina_sugerida": 640,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 640,
+        "nome": "Abertura/Fechamento de caixa",
+        "explicacao": "Controla abertura e fechamento de caixa para operadores.",
+        "proxima_rotina_sugerida": 607,
+        "dependencias": [418]
+      },
+      {
+        "codigo": 607,
+        "nome": "Cadastrar projetos",
+        "explicacao": "Cadastra projetos para controle de custos e receitas.",
+        "proxima_rotina_sugerida": 642,
+        "dependencias": []
+      },
+      {
+        "codigo": 642,
+        "nome": "Cadastrar vínculo entre caixa/banco",
+        "explicacao": "Vincula contas caixa e bancárias para conciliação.",
+        "proxima_rotina_sugerida": 624,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 624,
+        "nome": "Associar DNIs",
+        "explicacao": "Associa documentos não integrados a títulos ou pedidos.",
+        "proxima_rotina_sugerida": 643,
+        "dependencias": [635]
+      },
+      {
+        "codigo": 643,
+        "nome": "Conciliação e Geração Automática de Lanç",
+        "explicacao": "Concilia extratos bancários e gera lançamentos automaticamente.",
+        "proxima_rotina_sugerida": 608,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 608,
+        "nome": "Saldo por compensação",
+        "explicacao": "Consulta saldo por data de compensação (fluxo de caixa).",
+        "proxima_rotina_sugerida": 605,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 605,
+        "nome": "Extrato Caixa/Banco",
+        "explicacao": "Emite extrato detalhado de caixa ou conta bancária.",
+        "proxima_rotina_sugerida": 606,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 606,
+        "nome": "Posição do Saldo",
+        "explicacao": "Mostra a posição consolidada de saldos financeiros.",
+        "proxima_rotina_sugerida": 615,
+        "dependencias": [605]
+      },
+      {
+        "codigo": 615,
+        "nome": "Ficha Lanç. Despesas/Receitas",
+        "explicacao": "Ficha detalhada de lançamentos de despesas ou receitas.",
+        "proxima_rotina_sugerida": 616,
+        "dependencias": [631]
+      },
+      {
+        "codigo": 616,
+        "nome": "Ficha Transf. de Numerários",
+        "explicacao": "Ficha de transferências de numerários realizadas.",
+        "proxima_rotina_sugerida": 627,
+        "dependencias": [632]
+      },
+      {
+        "codigo": 627,
+        "nome": "Consultar trans. movimentos de numerário",
+        "explicacao": "Consulta movimentos de transferência de numerários.",
+        "proxima_rotina_sugerida": 634,
+        "dependencias": [632]
+      },
+      {
+        "codigo": 634,
+        "nome": "Relatório Transferência de Numerários",
+        "explicacao": "Relatório de todas as transferências de numerários.",
+        "proxima_rotina_sugerida": 637,
+        "dependencias": [632]
+      },
+      {
+        "codigo": 637,
+        "nome": "Emitir Solicitação de Verba",
+        "explicacao": "Emite documento formal de solicitação de verba.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [636]
+      },
+      {
+        "codigo": 641,
+        "nome": "Relatório de movimentação",
+        "explicacao": "Relatório geral de movimentações financeiras.",
+        "proxima_rotina_sugerida": 645,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 645,
+        "nome": "Relatório de Movimentações Caixa/Banco",
+        "explicacao": "Relatório de movimentações por caixa ou banco.",
+        "proxima_rotina_sugerida": 646,
+        "dependencias": [604]
+      },
+      {
+        "codigo": 646,
+        "nome": "Relatório Estáticos",
+        "explicacao": "Relatórios estáticos (não parametrizáveis) de suporte.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 617,
+        "nome": "Vale Avulso",
+        "explicacao": "Emite vale avulso para despesas de pequeno porte.",
+        "proxima_rotina_sugerida": 614,
+        "dependencias": []
+      },
+      {
+        "codigo": 614,
+        "nome": "Processo de Vale",
+        "explicacao": "Gerencia o processo de solicitação e aprovação de vales.",
+        "proxima_rotina_sugerida": 619,
+        "dependencias": [617]
+      },
+      {
+        "codigo": 619,
+        "nome": "Estornar crédito de cliente",
+        "explicacao": "Estorna crédito concedido a cliente (cancela o crédito).",
+        "proxima_rotina_sugerida": 628,
+        "dependencias": [618]
+      },
+      {
+        "codigo": 628,
+        "nome": "Consultar Crédito de Cliente",
+        "explicacao": "Consulta saldo de crédito disponível para cliente.",
+        "proxima_rotina_sugerida": 603,
+        "dependencias": [618]
+      },
+      {
+        "codigo": 603,
+        "nome": "Alterar Situação do Crédito",
+        "explicacao": "Altera status do crédito do cliente (ativo, bloqueado, etc).",
+        "proxima_rotina_sugerida": 618,
+        "dependencias": [618]
+      },
+      {
+        "codigo": 618,
+        "nome": "Lançar Crédito Cliente",
+        "explicacao": "Lança crédito para cliente (devolução, bonificação).",
+        "proxima_rotina_sugerida": 619,
+        "dependencias": [302]
+      },
+      {
+        "codigo": 705,
+        "nome": "Alterar Próximo Número Cheque",
+        "explicacao": "Altera o próximo número de cheque a ser utilizado.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 851,
+        "nome": "Gerador de relatório",
+        "explicacao": "Ferramenta genérica para criação de relatórios customizados.",
+        "proxima_rotina_sugerida": 860,
+        "dependencias": []
+      },
+      {
+        "codigo": 860,
+        "nome": "Consulta SQL",
+        "explicacao": "Permite executar consultas SQL diretamente no banco de dados.",
+        "proxima_rotina_sugerida": 800,
+        "dependencias": []
+      },
+      {
+        "codigo": 800,
+        "nome": "Gerador de relatórios",
+        "explicacao": "Interface avançada para geração de relatórios.",
+        "proxima_rotina_sugerida": 852,
+        "dependencias": [851]
+      },
+      {
+        "codigo": 852,
+        "nome": "Cadastro de KPI",
+        "explicacao": "Cadastra indicadores de desempenho (KPIs) para painéis gerenciais.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 888,
+        "nome": "Inventário de rotinas",
+        "explicacao": "Levantamento de todas as rotinas disponíveis no sistema.",
+        "proxima_rotina_sugerida": null,
+        "dependencias": []
+      },
+      {
+        "codigo": 814,
+        "nome": "Atualização de objeto de banco de dados",
+        "explicacao": "Atualiza objetos de banco (views, functions, triggers).",
+        "proxima_rotina_sugerida": 880,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 880,
+        "nome": "Agendar atualizações automáticas",
+        "explicacao": "Agenda a execução automática de atualizações.",
+        "proxima_rotina_sugerida": 801,
+        "dependencias": [814]
+      },
+      {
+        "codigo": 801,
+        "nome": "Atualização de Serviços Web",
+        "explicacao": "Atualiza serviços web utilizados pelo sistema.",
+        "proxima_rotina_sugerida": 802,
+        "dependencias": []
+      },
+      {
+        "codigo": 802,
+        "nome": "Controle de Perfil de Usuário",
+        "explicacao": "Gerencia perfis de usuário e suas permissões.",
+        "proxima_rotina_sugerida": 804,
+        "dependencias": [599]
+      },
+      {
+        "codigo": 804,
+        "nome": "Configurações LDAP",
+        "explicacao": "Configura integração com LDAP (Active Directory).",
+        "proxima_rotina_sugerida": 803,
+        "dependencias": []
+      },
+      {
+        "codigo": 803,
+        "nome": "Gerenciamento de agendamentos",
+        "explicacao": "Gerencia tarefas agendadas (backup, atualizações).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [880]
+      }
+    ]
+  }
+}

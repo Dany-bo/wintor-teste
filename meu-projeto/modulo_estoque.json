@@ -1,0 +1,507 @@
+{
+  "modulo": {
+    "nome": "ADM. INTERNA DO ESTOQUE",
+    "codigo_modulo": 11,
+    "descricao_geral": "Módulo de Administração Interna do Estoque do WinThor. Gerencia todo o movimento interno de mercadorias: consultas, extrato de produtos, ajustes, transferências entre depósitos, inventário, rastreabilidade de lotes e números de série, gestão de avarias, endereçamento, bônus de recebimento, produção simples, controle de consignado, etc.",
+    "fluxo_principal": "Consultas e extratos → Transferências → Ajustes → Inventário → Endereçamento → Rastreabilidade → Gestão de avarias",
+    "rotinas": [
+      {
+        "codigo": 1101,
+        "nome": "Consultar Produto-Armazenagem",
+        "explicacao": "Consulta informações de armazenagem do produto: endereços, capacidades, lotes, validades.",
+        "proxima_rotina_sugerida": 1118,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1103,
+        "nome": "Alterar Custo do Produto",
+        "explicacao": "Permite alterar o custo médio ou último custo de compra de um produto manualmente.",
+        "proxima_rotina_sugerida": 1117,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1117,
+        "nome": "Ajustar estoque",
+        "explicacao": "Ajusta quantidades em estoque (entrada ou saída manual) para correção de divergências.",
+        "proxima_rotina_sugerida": 1118,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1118,
+        "nome": "Extrato de Produto",
+        "explicacao": "Exibe o histórico de movimentações de um produto (entradas, saídas, ajustes, transferências).",
+        "proxima_rotina_sugerida": 1130,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1130,
+        "nome": "Relação de Estoque",
+        "explicacao": "Relatório de posição de estoque atual (saldo por produto, depósito, lote).",
+        "proxima_rotina_sugerida": 1128,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1128,
+        "nome": "Templates de etiquetas",
+        "explicacao": "Cadastro de modelos de etiquetas para impressão (código de barras, endereçamento).",
+        "proxima_rotina_sugerida": 1146,
+        "dependencias": []
+      },
+      {
+        "codigo": 1146,
+        "nome": "Relatório de estoque/paletização",
+        "explicacao": "Relatório de estoque por palete ou localização, auxiliando na organização do armazém.",
+        "proxima_rotina_sugerida": 1162,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1162,
+        "nome": "Cadastrar certificado",
+        "explicacao": "Cadastra certificados de qualidade ou origem para produtos (ex: produtos orgânicos).",
+        "proxima_rotina_sugerida": 1165,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1165,
+        "nome": "Relatório Ajustes de Estoque",
+        "explicacao": "Relatório de ajustes de estoque realizados em um período.",
+        "proxima_rotina_sugerida": 1181,
+        "dependencias": [1117]
+      },
+      {
+        "codigo": 1181,
+        "nome": "Ajustar estoque - avaria",
+        "explicacao": "Ajuste específico para produtos danificados (avarias), movendo para estoque de avaria.",
+        "proxima_rotina_sugerida": 1186,
+        "dependencias": [1117]
+      },
+      {
+        "codigo": 1186,
+        "nome": "Atualizar venda tipo 4",
+        "explicacao": "Atualiza vendas do tipo 4 (consumo interno ou brinde) impactando o estoque.",
+        "proxima_rotina_sugerida": 1193,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 1193,
+        "nome": "Requisição de materiais de consumo",
+        "explicacao": "Solicitação interna de materiais de consumo (almoxarifado) com baixa no estoque.",
+        "proxima_rotina_sugerida": 1171,
+        "dependencias": []
+      },
+      {
+        "codigo": 1171,
+        "nome": "Importar arquivo conferência cega",
+        "explicacao": "Importa arquivo de conferência cega (leitura de códigos de barras) para agilizar inventário.",
+        "proxima_rotina_sugerida": 1179,
+        "dependencias": []
+      },
+      {
+        "codigo": 1179,
+        "nome": "Rastreabilidade de Lotes",
+        "explicacao": "Rastreia a movimentação de lotes (entrada, saída, validade), obrigatório para medicamentos e alimentos.",
+        "proxima_rotina_sugerida": 1107,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1107,
+        "nome": "Manutenção técnica do produto",
+        "explicacao": "Registra manutenções técnicas realizadas em produtos (garantia, assistência).",
+        "proxima_rotina_sugerida": 1182,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1182,
+        "nome": "Gestão de Avarias",
+        "explicacao": "Gerencia produtos avariados: aprovação para descarte, reparo ou devolução.",
+        "proxima_rotina_sugerida": 1100,
+        "dependencias": [1181]
+      },
+      {
+        "codigo": 1100,
+        "nome": "Atualizar Procedure",
+        "explicacao": "Atualiza procedures de banco de dados relacionadas ao estoque.",
+        "proxima_rotina_sugerida": 1131,
+        "dependencias": [500]
+      },
+      {
+        "codigo": 1131,
+        "nome": "Manutenção e emissão do número de série",
+        "explicacao": "Controla números de série de produtos (entrada, venda, rastreabilidade).",
+        "proxima_rotina_sugerida": 1123,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1123,
+        "nome": "Transferir produto entre depósito",
+        "explicacao": "Transfere quantidades de um produto entre depósitos da mesma filial.",
+        "proxima_rotina_sugerida": 1124,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1124,
+        "nome": "Transferir produto entre filial/depósito",
+        "explicacao": "Transfere produtos entre filiais diferentes, gerando entrada e saída fiscal.",
+        "proxima_rotina_sugerida": 1168,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1168,
+        "nome": "Rel.Itens Inventariados Sem Estoque Anterior",
+        "explicacao": "Relatório de itens inventariados que não tinham estoque anterior (possível erro de contagem).",
+        "proxima_rotina_sugerida": 1173,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1173,
+        "nome": "ABC giro Médio por Palete",
+        "explicacao": "Classificação ABC de produtos por giro médio, otimizando alocação em paletes.",
+        "proxima_rotina_sugerida": 1187,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1187,
+        "nome": "Liberar Estoque Bloqueado",
+        "explicacao": "Libera produtos previamente bloqueados (ex: por qualidade, avaria).",
+        "proxima_rotina_sugerida": 1197,
+        "dependencias": [266]
+      },
+      {
+        "codigo": 1197,
+        "nome": "Transferir Produtos da Loja para o Depósito",
+        "explicacao": "Transfere mercadorias da loja (PDV) para o depósito central.",
+        "proxima_rotina_sugerida": 1106,
+        "dependencias": [1124]
+      },
+      {
+        "codigo": 1106,
+        "nome": "Manutenção do bônus de recebimento de mercadoria",
+        "explicacao": "Controla bônus recebidos de fornecedores (ex: brindes, amostras) no estoque.",
+        "proxima_rotina_sugerida": 1108,
+        "dependencias": [202]
+      },
+      {
+        "codigo": 1108,
+        "nome": "Digitar Bônus",
+        "explicacao": "Digita bônus de recebimento (entrada de mercadoria sem custo).",
+        "proxima_rotina_sugerida": 1141,
+        "dependencias": [1106]
+      },
+      {
+        "codigo": 1141,
+        "nome": "Calcular Valor Receita Descarga",
+        "explicacao": "Calcula o valor de receita de descarga (taxa de manuseio) para produtos.",
+        "proxima_rotina_sugerida": 1142,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1142,
+        "nome": "Emitir Recibo Receita Descarga",
+        "explicacao": "Emite recibo de receita de descarga para transportadoras.",
+        "proxima_rotina_sugerida": 1145,
+        "dependencias": [1141]
+      },
+      {
+        "codigo": 1145,
+        "nome": "Cancelar Valor Receita Descarga",
+        "explicacao": "Cancela valor de receita de descarga lançado anteriormente.",
+        "proxima_rotina_sugerida": 1121,
+        "dependencias": [1141]
+      },
+      {
+        "codigo": 1121,
+        "nome": "Consultar produto bônus",
+        "explicacao": "Consulta produtos recebidos como bônus por fornecedor.",
+        "proxima_rotina_sugerida": 1132,
+        "dependencias": [1108]
+      },
+      {
+        "codigo": 1132,
+        "nome": "Digitar bônus de recebimento de mercadoria",
+        "explicacao": "Versão alternativa para digitar bônus de recebimento.",
+        "proxima_rotina_sugerida": 1105,
+        "dependencias": [1106]
+      },
+      {
+        "codigo": 1105,
+        "nome": "Conferir Pré-Entrada",
+        "explicacao": "Confere pré-entrada de mercadorias antes do lançamento oficial da nota fiscal.",
+        "proxima_rotina_sugerida": 1109,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1109,
+        "nome": "Check-in Recebimento Produtos Importados",
+        "explicacao": "Processo de check-in para produtos importados (desembaraço, conferência).",
+        "proxima_rotina_sugerida": 1147,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1147,
+        "nome": "Manutenção de inventário rotativo",
+        "explicacao": "Gerencia inventário rotativo (contagem contínua por produtos).",
+        "proxima_rotina_sugerida": 1188,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1188,
+        "nome": "Atualização Contábil de Inventários",
+        "explicacao": "Atualiza contabilmente os valores de inventário (ajustes de estoque).",
+        "proxima_rotina_sugerida": 1194,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1194,
+        "nome": "Estorno de NF-e de Ajuste",
+        "explicacao": "Estorna nota fiscal de ajuste de estoque (entrada ou saída).",
+        "proxima_rotina_sugerida": 1148,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 1148,
+        "nome": "Manutenção de inventário do número de série",
+        "explicacao": "Controla inventário de produtos com número de série.",
+        "proxima_rotina_sugerida": 1189,
+        "dependencias": [1131]
+      },
+      {
+        "codigo": 1189,
+        "nome": "Conferir digitação inventário quantitativo",
+        "explicacao": "Conferência da digitação das quantidades no inventário.",
+        "proxima_rotina_sugerida": 1125,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1125,
+        "nome": "Redigitar inventário",
+        "explicacao": "Permite redigitar a contagem de inventário para correção.",
+        "proxima_rotina_sugerida": 1119,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1119,
+        "nome": "Requisição matéria-prima",
+        "explicacao": "Requisição de matéria-prima para produção (indústria).",
+        "proxima_rotina_sugerida": 1120,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1120,
+        "nome": "Consultar requisição mat. prima",
+        "explicacao": "Consulta requisições de matéria-prima.",
+        "proxima_rotina_sugerida": 1122,
+        "dependencias": [1119]
+      },
+      {
+        "codigo": 1122,
+        "nome": "Montar Produtos",
+        "explicacao": "Montagem de produtos acabados a partir de componentes (ordem de produção simples).",
+        "proxima_rotina_sugerida": 1126,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1126,
+        "nome": "Entrada Produto Acabado",
+        "explicacao": "Registra a entrada de produto acabado após produção.",
+        "proxima_rotina_sugerida": 1143,
+        "dependencias": [1122]
+      },
+      {
+        "codigo": 1143,
+        "nome": "Sobra de Mercadoria",
+        "explicacao": "Registra sobras de mercadoria (ex: quebra de embalagem) para ajuste de estoque.",
+        "proxima_rotina_sugerida": 1163,
+        "dependencias": [1117]
+      },
+      {
+        "codigo": 1163,
+        "nome": "Relat.Produtos Não Inventariados",
+        "explicacao": "Relatório de produtos não contados no último inventário.",
+        "proxima_rotina_sugerida": 1170,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1170,
+        "nome": "Montagem de Produtos",
+        "explicacao": "Versão alternativa da rotina 1122 (montagem de produtos).",
+        "proxima_rotina_sugerida": 1127,
+        "dependencias": [1122]
+      },
+      {
+        "codigo": 1127,
+        "nome": "Relatório de Produtos Produzidos",
+        "explicacao": "Relatório de produtos produzidos em determinado período.",
+        "proxima_rotina_sugerida": 1129,
+        "dependencias": [1126]
+      },
+      {
+        "codigo": 1129,
+        "nome": "Retorno de Venda Avulsa",
+        "explicacao": "Registra retorno (devolução) de venda avulsa (sem nota fiscal).",
+        "proxima_rotina_sugerida": 1160,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 1160,
+        "nome": "Requisição de matéria-prima",
+        "explicacao": "Requisição de matéria-prima (versão alternativa).",
+        "proxima_rotina_sugerida": 1161,
+        "dependencias": [1119]
+      },
+      {
+        "codigo": 1161,
+        "nome": "Entrada Produto Acabado",
+        "explicacao": "Entrada de produto acabado (versão alternativa).",
+        "proxima_rotina_sugerida": 1110,
+        "dependencias": [1126]
+      },
+      {
+        "codigo": 1110,
+        "nome": "Alimentar Gondola Mista",
+        "explicacao": "Alimenta gondola mista (PDV) com produtos de diferentes categorias.",
+        "proxima_rotina_sugerida": 1133,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 1133,
+        "nome": "Cadastrar Endereço",
+        "explicacao": "Cadastra endereços de armazenagem (ruas, prateleiras, posições).",
+        "proxima_rotina_sugerida": 1134,
+        "dependencias": []
+      },
+      {
+        "codigo": 1134,
+        "nome": "Ordem de Endereçamento - Automático",
+        "explicacao": "Gera ordem de endereçamento automática para produtos baseada em regras (giro, peso).",
+        "proxima_rotina_sugerida": 1135,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1135,
+        "nome": "Ordem de Endereçamento - Manual",
+        "explicacao": "Permite definir manualmente o endereço de armazenagem para produtos.",
+        "proxima_rotina_sugerida": 1136,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1136,
+        "nome": "Ordem de Abastecimento",
+        "explicacao": "Gera ordens de abastecimento (reposição de endereços vazios).",
+        "proxima_rotina_sugerida": 1137,
+        "dependencias": [1134]
+      },
+      {
+        "codigo": 1137,
+        "nome": "Mudar Mercadoria de Endereço",
+        "explicacao": "Move mercadoria de um endereço para outro (re-endereçamento).",
+        "proxima_rotina_sugerida": 1138,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1138,
+        "nome": "Rel. Endereços de um Produto",
+        "explicacao": "Lista todos os endereços onde um determinado produto está armazenado.",
+        "proxima_rotina_sugerida": 1139,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1139,
+        "nome": "Rel. Mercadorias de um Endereço",
+        "explicacao": "Lista todas as mercadorias armazenadas em um endereço específico.",
+        "proxima_rotina_sugerida": 1140,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1140,
+        "nome": "Emitir Etiqueta Armazenagem",
+        "explicacao": "Emite etiqueta de endereço (com código de barras) para identificação.",
+        "proxima_rotina_sugerida": 1158,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1158,
+        "nome": "Rel. Produto por Peso e Rua",
+        "explicacao": "Relatório de produtos agrupados por peso e rua de armazenagem.",
+        "proxima_rotina_sugerida": 1164,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1164,
+        "nome": "Geração automática endereçamento",
+        "explicacao": "Gera automaticamente endereços para produtos novos ou sem endereço.",
+        "proxima_rotina_sugerida": 1174,
+        "dependencias": [1134]
+      },
+      {
+        "codigo": 1174,
+        "nome": "Comanda de Abastecimento",
+        "explicacao": "Emite comanda de abastecimento para separadores (lista de endereços a abastecer).",
+        "proxima_rotina_sugerida": 1176,
+        "dependencias": [1136]
+      },
+      {
+        "codigo": 1176,
+        "nome": "Etiqueta de endereço",
+        "explicacao": "Imprime etiqueta de endereço para fixação em local de armazenagem.",
+        "proxima_rotina_sugerida": 1156,
+        "dependencias": [1133]
+      },
+      {
+        "codigo": 1156,
+        "nome": "Div.Estoque X Contagem P/ Endereçamento",
+        "explicacao": "Relatório de divergência entre estoque teórico e contagem por endereço.",
+        "proxima_rotina_sugerida": 1183,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1183,
+        "nome": "Desdobramento de Lote",
+        "explicacao": "Desdobra um lote em sub-lotes (ex: separação por validade).",
+        "proxima_rotina_sugerida": 1185,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1185,
+        "nome": "Montar Inventário por Lote",
+        "explicacao": "Prepara inventário específico por lote (para rastreabilidade).",
+        "proxima_rotina_sugerida": 1191,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1191,
+        "nome": "Emitir Listagem de Contagem por Lote",
+        "explicacao": "Emite listagem para contagem de estoque por lote.",
+        "proxima_rotina_sugerida": 1190,
+        "dependencias": [1185]
+      },
+      {
+        "codigo": 1190,
+        "nome": "Divergência de Estoque X Contagem por Lote",
+        "explicacao": "Relatório de divergências entre estoque e contagem por lote.",
+        "proxima_rotina_sugerida": 1177,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1177,
+        "nome": "Gerar arquivo p/ contagem e auditoria preço",
+        "explicacao": "Gera arquivo para contagem física e auditoria de preços.",
+        "proxima_rotina_sugerida": 1198,
+        "dependencias": [1147]
+      },
+      {
+        "codigo": 1198,
+        "nome": "Balanço de Medicamentos Controlados",
+        "explicacao": "Relatório de balanço de medicamentos controlados (obrigação ANVISA).",
+        "proxima_rotina_sugerida": 1195,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1195,
+        "nome": "Emitir Posição do Estoque Consignado",
+        "explicacao": "Relatório de posição de estoque consignado (mercadoria de fornecedor em seu depósito).",
+        "proxima_rotina_sugerida": null,
+        "dependencias": [202]
+      }
+    ]
+  }
+}

@@ -1,0 +1,570 @@
+{
+  "modulo": {
+    "nome": "EXPEDIÇÃO",
+    "codigo_modulo": 9,
+    "descricao_geral": "Módulo de Expedição do WinThor. Gerencia todo o processo de separação, conferência, carregamento e faturamento de pedidos, incluindo rotas, transportadoras, comissões de freteiro, controle de veículos, emissão de conhecimentos de frete e integração com WMS.",
+    "fluxo_principal": "Montagem de carga → Separação → Conferência → Faturamento → Expedição → Entrega → Comissões",
+    "rotinas": [
+      {
+        "codigo": 901,
+        "nome": "Montar Carga",
+        "explicacao": "Rotina principal para montagem de cargas de expedição. Agrupa pedidos por rota, veículo ou transportadora.",
+        "proxima_rotina_sugerida": 902,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 902,
+        "nome": "Emitir mapa de separação por rua",
+        "explicacao": "Emite mapa de separação organizado por rua/endereço de armazenagem. Otimiza o picking no depósito.",
+        "proxima_rotina_sugerida": 903,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 903,
+        "nome": "Emitir mapa de separação por cidade",
+        "explicacao": "Emite mapa de separação agrupado por cidade de entrega. Útil para cargas com destino concentrado.",
+        "proxima_rotina_sugerida": 904,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 904,
+        "nome": "Cancelar Carga",
+        "explicacao": "Cancela uma carga montada, liberando os pedidos para nova montagem.",
+        "proxima_rotina_sugerida": 905,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 905,
+        "nome": "Transferir NF Venda entre Carregamento",
+        "explicacao": "Transfere uma nota fiscal de venda de um carregamento para outro.",
+        "proxima_rotina_sugerida": 916,
+        "dependencias": [1402, 901]
+      },
+      {
+        "codigo": 906,
+        "nome": "Registrar saída de veículos",
+        "explicacao": "Registra a saída de veículos carregados, controlando horários e documentos.",
+        "proxima_rotina_sugerida": 909,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 908,
+        "nome": "Acompanhamento de Entregas",
+        "explicacao": "Acompanha o status das entregas em tempo real (se integrado com rastreamento).",
+        "proxima_rotina_sugerida": 966,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 909,
+        "nome": "Cargas em Aberto",
+        "explicacao": "Relatório de cargas ainda não finalizadas.",
+        "proxima_rotina_sugerida": 915,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 910,
+        "nome": "Pedido por Carregamento",
+        "explicacao": "Relatório que lista os pedidos pertencentes a um carregamento específico.",
+        "proxima_rotina_sugerida": 911,
+        "dependencias": [901, 316]
+      },
+      {
+        "codigo": 911,
+        "nome": "Cliente para Roterizar",
+        "explicacao": "Permite definir clientes prioritários para roteirização de entregas.",
+        "proxima_rotina_sugerida": 913,
+        "dependencias": [302]
+      },
+      {
+        "codigo": 912,
+        "nome": "Comissão freteiro por veículo",
+        "explicacao": "Calcula e emite comissão para freteiro baseada no veículo utilizado.",
+        "proxima_rotina_sugerida": 921,
+        "dependencias": [414]
+      },
+      {
+        "codigo": 913,
+        "nome": "Escala diária de entregas",
+        "explicacao": "Define a escala diária de entregas por rota e veículo.",
+        "proxima_rotina_sugerida": 914,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 914,
+        "nome": "Rentabilidade por Rota",
+        "explicacao": "Relatório de rentabilidade por rota de entrega (receita x custo frete).",
+        "proxima_rotina_sugerida": 918,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 915,
+        "nome": "Alterar roteirização cliente",
+        "explicacao": "Altera a roteirização de clientes (troca de rota ou sequência).",
+        "proxima_rotina_sugerida": 929,
+        "dependencias": [302]
+      },
+      {
+        "codigo": 916,
+        "nome": "Emitir mapa de separação por carregamento",
+        "explicacao": "Emite mapa de separação agrupado por carregamento.",
+        "proxima_rotina_sugerida": 922,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 917,
+        "nome": "Simulador de Frete",
+        "explicacao": "Simula o valor do frete com base em peso, volume, distância e transportadora.",
+        "proxima_rotina_sugerida": 919,
+        "dependencias": []
+      },
+      {
+        "codigo": 918,
+        "nome": "Venda por veículo",
+        "explicacao": "Relatório de vendas associadas a cada veículo de entrega.",
+        "proxima_rotina_sugerida": 920,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 919,
+        "nome": "Simulador de Frete por Carreg. de Cliente",
+        "explicacao": "Simula frete para um carregamento específico de cliente.",
+        "proxima_rotina_sugerida": 965,
+        "dependencias": [917]
+      },
+      {
+        "codigo": 920,
+        "nome": "Consulta de itens por carregamento faturado",
+        "explicacao": "Consulta itens faturados dentro de um carregamento.",
+        "proxima_rotina_sugerida": 934,
+        "dependencias": [901, 1402]
+      },
+      {
+        "codigo": 921,
+        "nome": "Comissão por rota",
+        "explicacao": "Define comissão de freteiro baseada na rota percorrida.",
+        "proxima_rotina_sugerida": 923,
+        "dependencias": [414]
+      },
+      {
+        "codigo": 922,
+        "nome": "Comissão freteiro por produto",
+        "explicacao": "Calcula comissão por produto transportado (ex: produtos de alto valor).",
+        "proxima_rotina_sugerida": 953,
+        "dependencias": [414]
+      },
+      {
+        "codigo": 923,
+        "nome": "Comissão freteiros por produto",
+        "explicacao": "Versão alternativa da comissão por produto.",
+        "proxima_rotina_sugerida": 908,
+        "dependencias": [414]
+      },
+      {
+        "codigo": 924,
+        "nome": "Geração de contas a pagar por RPA",
+        "explicacao": "Gera contas a pagar para freteiros com base em RPA (Recibo de Pagamento a Autônomo).",
+        "proxima_rotina_sugerida": 927,
+        "dependencias": [735]
+      },
+      {
+        "codigo": 926,
+        "nome": "Acessar a montagem de carga",
+        "explicacao": "Interface para montagem interativa de carga.",
+        "proxima_rotina_sugerida": 962,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 927,
+        "nome": "Resumo de Pedido por Rota",
+        "explicacao": "Relatório resumido de pedidos agrupados por rota.",
+        "proxima_rotina_sugerida": 933,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 929,
+        "nome": "Cadastrar Motorista",
+        "explicacao": "Cadastra motoristas para controle de fretes e comissões.",
+        "proxima_rotina_sugerida": 935,
+        "dependencias": []
+      },
+      {
+        "codigo": 930,
+        "nome": "Atribuição de Lote",
+        "explicacao": "Atribui números de lote a produtos durante a separação (rastreabilidade).",
+        "proxima_rotina_sugerida": 974,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 931,
+        "nome": "Emitir mapa de separação por pedido",
+        "explicacao": "Emite mapa de separação individualizado por pedido.",
+        "proxima_rotina_sugerida": 936,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 932,
+        "nome": "Corte por Pedido Venda",
+        "explicacao": "Realiza corte de estoque (reserva) para pedidos de venda.",
+        "proxima_rotina_sugerida": 959,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 933,
+        "nome": "Gerar Arquivo de Carregamento",
+        "explicacao": "Gera arquivo de dados do carregamento para integração com sistemas externos.",
+        "proxima_rotina_sugerida": 939,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 934,
+        "nome": "Ficha de Viagem",
+        "explicacao": "Emite ficha de viagem para o motorista (documento de rota).",
+        "proxima_rotina_sugerida": 942,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 935,
+        "nome": "Descarga de Mercadoria",
+        "explicacao": "Registra a descarga de mercadorias no destino (controle de entregas).",
+        "proxima_rotina_sugerida": 957,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 936,
+        "nome": "Conferir separação por pedido",
+        "explicacao": "Conferência da separação realizada pedido a pedido.",
+        "proxima_rotina_sugerida": 938,
+        "dependencias": [931]
+      },
+      {
+        "codigo": 937,
+        "nome": "Cadastro de Número de Série dos Produtos",
+        "explicacao": "Cadastra números de série de produtos para rastreabilidade na expedição.",
+        "proxima_rotina_sugerida": 972,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 938,
+        "nome": "Emitir mapa de separação de pedido por rua",
+        "explicacao": "Emite mapa de separação detalhado por rua/endereço para um pedido.",
+        "proxima_rotina_sugerida": 949,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 939,
+        "nome": "Importar Cargas Montadas",
+        "explicacao": "Importa cargas montadas de sistemas externos.",
+        "proxima_rotina_sugerida": 940,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 940,
+        "nome": "Gerenciar expedição por O.S.",
+        "explicacao": "Gerencia a expedição vinculada a ordens de serviço.",
+        "proxima_rotina_sugerida": 941,
+        "dependencias": [3501]
+      },
+      {
+        "codigo": 941,
+        "nome": "Exportar número de notas fiscais",
+        "explicacao": "Exporta números de notas fiscais para integração.",
+        "proxima_rotina_sugerida": 954,
+        "dependencias": [1402]
+      },
+      {
+        "codigo": 942,
+        "nome": "Conf. pedido pelo cód. barras do produto",
+        "explicacao": "Conferência de pedidos usando leitura de código de barras de produtos.",
+        "proxima_rotina_sugerida": 946,
+        "dependencias": [279]
+      },
+      {
+        "codigo": 944,
+        "nome": "Agrupamento de pedidos",
+        "explicacao": "Agrupa múltiplos pedidos em uma mesma carga (para mesmo cliente/rota).",
+        "proxima_rotina_sugerida": 906,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 946,
+        "nome": "Emitir Etiqueta do Pedido",
+        "explicacao": "Emite etiqueta com informações do pedido para identificação de volumes.",
+        "proxima_rotina_sugerida": 948,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 948,
+        "nome": "Produtividade da separação",
+        "explicacao": "Relatório de produtividade dos operadores de separação.",
+        "proxima_rotina_sugerida": 961,
+        "dependencias": []
+      },
+      {
+        "codigo": 949,
+        "nome": "Informar Volumes por Pedido",
+        "explicacao": "Registra quantos volumes (caixas, paletes) cada pedido possui.",
+        "proxima_rotina_sugerida": 950,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 950,
+        "nome": "Check out produtos",
+        "explicacao": "Registra a saída de produtos do depósito (check-out).",
+        "proxima_rotina_sugerida": 955,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 951,
+        "nome": "Conferir volume miudeza",
+        "explicacao": "Conferência de volumes pequenos (miudezas) para expedição.",
+        "proxima_rotina_sugerida": 952,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 952,
+        "nome": "Associar Carregamento Normal com Broker",
+        "explicacao": "Associa um carregamento normal a um broker (intermediador logístico).",
+        "proxima_rotina_sugerida": 937,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 953,
+        "nome": "Mapa de separação",
+        "explicacao": "Versão padrão do mapa de separação de pedidos.",
+        "proxima_rotina_sugerida": 908,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 954,
+        "nome": "Liberar pedido de expedição",
+        "explicacao": "Libera um pedido para expedição após conferência.",
+        "proxima_rotina_sugerida": 958,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 955,
+        "nome": "Iniciar/finalizar expedição de pedidos",
+        "explicacao": "Controla o início e fim do processo de expedição para um conjunto de pedidos.",
+        "proxima_rotina_sugerida": 924,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 956,
+        "nome": "Relatório fluxo expedição / venda balcão",
+        "explicacao": "Relatório comparativo entre expedição e vendas de balcão.",
+        "proxima_rotina_sugerida": 912,
+        "dependencias": [901, 2075]
+      },
+      {
+        "codigo": 957,
+        "nome": "Calcular Frete do Pedido",
+        "explicacao": "Calcula o valor de frete para um pedido específico.",
+        "proxima_rotina_sugerida": 917,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 958,
+        "nome": "Conferir Transferência Depósito/Loja",
+        "explicacao": "Confere transferências de mercadorias entre depósito e loja.",
+        "proxima_rotina_sugerida": 960,
+        "dependencias": [1124]
+      },
+      {
+        "codigo": 959,
+        "nome": "Conferir separação de carregamento por b",
+        "explicacao": "Conferência da separação de carregamento por bloco ou lote.",
+        "proxima_rotina_sugerida": 990,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 960,
+        "nome": "Conferir separação por carregamento",
+        "explicacao": "Conferência geral da separação por carregamento.",
+        "proxima_rotina_sugerida": 951,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 961,
+        "nome": "Produtividade da Conferência",
+        "explicacao": "Relatório de produtividade dos conferentes de expedição.",
+        "proxima_rotina_sugerida": 956,
+        "dependencias": []
+      },
+      {
+        "codigo": 962,
+        "nome": "Acessar conferência de carga/pedido",
+        "explicacao": "Interface para conferência integrada de carga e pedidos.",
+        "proxima_rotina_sugerida": 976,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 963,
+        "nome": "Alterar roteirização de entrega por pedido",
+        "explicacao": "Altera a roteirização de entrega de um pedido específico.",
+        "proxima_rotina_sugerida": 964,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 964,
+        "nome": "Consultar carregamento de frete por transportadora",
+        "explicacao": "Consulta carregamentos filtrados por transportadora.",
+        "proxima_rotina_sugerida": 997,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 965,
+        "nome": "Cadastrar localização de veículos",
+        "explicacao": "Cadastra localizações/posições de veículos no pátio ou doca.",
+        "proxima_rotina_sugerida": 981,
+        "dependencias": []
+      },
+      {
+        "codigo": 966,
+        "nome": "Consultar Rota/Praça",
+        "explicacao": "Consulta rotas ou praças de entrega cadastradas.",
+        "proxima_rotina_sugerida": 967,
+        "dependencias": [428]
+      },
+      {
+        "codigo": 967,
+        "nome": "Consultar Carregamento",
+        "explicacao": "Consulta carregamentos por diversos filtros.",
+        "proxima_rotina_sugerida": 968,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 968,
+        "nome": "Consultar Corte por Carregamento",
+        "explicacao": "Consulta cortes de estoque realizados para um carregamento.",
+        "proxima_rotina_sugerida": 963,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 969,
+        "nome": "Atribuir Número de Série",
+        "explicacao": "Atribui número de série a produtos na expedição.",
+        "proxima_rotina_sugerida": 993,
+        "dependencias": [937]
+      },
+      {
+        "codigo": 972,
+        "nome": "Conferir pedidos/carregamentos faturados",
+        "explicacao": "Conferência de pedidos e carregamentos já faturados.",
+        "proxima_rotina_sugerida": 998,
+        "dependencias": [901, 1402]
+      },
+      {
+        "codigo": 974,
+        "nome": "Cadastro de Metas de Produtividade",
+        "explicacao": "Cadastra metas de produtividade para separação e conferência.",
+        "proxima_rotina_sugerida": 999,
+        "dependencias": []
+      },
+      {
+        "codigo": 975,
+        "nome": "Apurar produtividade do separador",
+        "explicacao": "Apura a produtividade individual dos separadores.",
+        "proxima_rotina_sugerida": 926,
+        "dependencias": [948]
+      },
+      {
+        "codigo": 976,
+        "nome": "Mapa de Separação de Simples Remessa",
+        "explicacao": "Mapa de separação específico para remessas simples (não faturadas).",
+        "proxima_rotina_sugerida": 962,
+        "dependencias": [1306]
+      },
+      {
+        "codigo": 980,
+        "nome": "Altera sequência de montagem",
+        "explicacao": "Altera a ordem de montagem dos pedidos em uma carga.",
+        "proxima_rotina_sugerida": 996,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 981,
+        "nome": "Cálculo de frete por veículo",
+        "explicacao": "Calcula frete com base no veículo utilizado (capacidade, tipo).",
+        "proxima_rotina_sugerida": 982,
+        "dependencias": [917]
+      },
+      {
+        "codigo": 982,
+        "nome": "Cadastro de Figura de Frete",
+        "explicacao": "Cadastra figuras de frete (peso, volume, valor) para cálculo.",
+        "proxima_rotina_sugerida": 983,
+        "dependencias": []
+      },
+      {
+        "codigo": 983,
+        "nome": "Cadastro de Fórmulas de Frete",
+        "explicacao": "Cadastra fórmulas customizadas para cálculo de frete.",
+        "proxima_rotina_sugerida": 984,
+        "dependencias": []
+      },
+      {
+        "codigo": 984,
+        "nome": "Cálculo de frete",
+        "explicacao": "Calcula frete usando as fórmulas cadastradas.",
+        "proxima_rotina_sugerida": 986,
+        "dependencias": [983]
+      },
+      {
+        "codigo": 986,
+        "nome": "Conferência de frete",
+        "explicacao": "Conferência dos valores de frete calculados.",
+        "proxima_rotina_sugerida": 910,
+        "dependencias": [984]
+      },
+      {
+        "codigo": 990,
+        "nome": "Controle de entrega venda balcão/balcão",
+        "explicacao": "Controle de entregas para vendas de balcão.",
+        "proxima_rotina_sugerida": 930,
+        "dependencias": [2075]
+      },
+      {
+        "codigo": 993,
+        "nome": "Lançamento de Lacres",
+        "explicacao": "Registra números de lacre de segurança de veículos/containers.",
+        "proxima_rotina_sugerida": 969,
+        "dependencias": []
+      },
+      {
+        "codigo": 994,
+        "nome": "Mapa de separação por rua produtos frios",
+        "explicacao": "Mapa de separação específico para produtos que exigem refrigeração.",
+        "proxima_rotina_sugerida": 932,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 996,
+        "nome": "Agrupamento de carregamentos",
+        "explicacao": "Agrupa múltiplos carregamentos em um único.",
+        "proxima_rotina_sugerida": 980,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 997,
+        "nome": "Consultar pedidos separados/conferidos",
+        "explicacao": "Consulta pedidos já separados e/ou conferidos.",
+        "proxima_rotina_sugerida": 975,
+        "dependencias": [316]
+      },
+      {
+        "codigo": 998,
+        "nome": "Altera a quantidade de produtos frios",
+        "explicacao": "Altera quantidades de produtos refrigerados na carga.",
+        "proxima_rotina_sugerida": 980,
+        "dependencias": [901]
+      },
+      {
+        "codigo": 999,
+        "nome": "Movimentação de Selos",
+        "explicacao": "Controla movimentação de selos fiscais (para documentos).",
+        "proxima_rotina_sugerida": 974,
+        "dependencias": []
+      }
+    ]
+  }
+}

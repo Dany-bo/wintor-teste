@@ -1,0 +1,465 @@
+{
+  "modulo": {
+    "nome": "PRODUÇÃO",
+    "codigo_modulo": 16,
+    "descricao_geral": "Módulo de Produção do WinThor. Gerencia todo o processo produtivo: ordens de produção (OP), estruturas de produtos acabados, requisição de matérias-primas, apontamentos, controle de lotes, inspeção de qualidade, rastreabilidade, gestão de recursos e maquinário, produção contínua, eficiência, etc.",
+    "fluxo_principal": "Estruturação do produto → Ordem de Produção → Requisição de matérias-primas → Apontamento → Entrada de produto acabado → Fechamento OP",
+    "rotinas": [
+      {
+        "codigo": 1600,
+        "nome": "Atualizar Menu e Permissões Produção",
+        "explicacao": "Atualiza o menu do módulo de produção e as permissões de acesso às rotinas produtivas.",
+        "proxima_rotina_sugerida": 1601,
+        "dependencias": [530]
+      },
+      {
+        "codigo": 1601,
+        "nome": "Estruturar Produto Acabado",
+        "explicacao": "Define a estrutura (bill of materials - BOM) do produto acabado, listando matérias-primas, componentes e quantidades necessárias.",
+        "proxima_rotina_sugerida": 1607,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1602,
+        "nome": "Simulação de Consumo",
+        "explicacao": "Simula o consumo de matérias-primas para uma determinada quantidade de produção, auxiliando no planejamento de compras.",
+        "proxima_rotina_sugerida": 1603,
+        "dependencias": [1601]
+      },
+      {
+        "codigo": 1603,
+        "nome": "Previsão Base de Produção",
+        "explicacao": "Gera previsão de produção com base em vendas, estoque e lead times.",
+        "proxima_rotina_sugerida": 1604,
+        "dependencias": [1602]
+      },
+      {
+        "codigo": 1604,
+        "nome": "Programação Base de Produção",
+        "explicacao": "Programa a produção com base nas previsões, alocando recursos e definindo datas.",
+        "proxima_rotina_sugerida": 1668,
+        "dependencias": [1603]
+      },
+      {
+        "codigo": 1605,
+        "nome": "Entrada Física no Almoxarifado",
+        "explicacao": "Registra a entrada física de matérias-primas ou componentes no almoxarifado da produção.",
+        "proxima_rotina_sugerida": 1620,
+        "dependencias": [1301]
+      },
+      {
+        "codigo": 1607,
+        "nome": "Cadastrar Dados de Produção no Produto",
+        "explicacao": "Complementa o cadastro do produto com informações específicas de produção (tempo de ciclo, setup, etc.).",
+        "proxima_rotina_sugerida": 1601,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1610,
+        "nome": "Movimentações do Inventário Por Lote",
+        "explicacao": "Registra movimentações de estoque por lote (entrada, saída, transferência) na produção.",
+        "proxima_rotina_sugerida": 1647,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1612,
+        "nome": "Reemissão do Laudo de Análise",
+        "explicacao": "Reemite laudo de análise de qualidade de um lote produzido.",
+        "proxima_rotina_sugerida": 1632,
+        "dependencias": [1613]
+      },
+      {
+        "codigo": 1613,
+        "nome": "Análise de Produção por Lote",
+        "explicacao": "Registra análises de qualidade (físico-químicas, microbiológicas) por lote produzido.",
+        "proxima_rotina_sugerida": 1673,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1614,
+        "nome": "Cadastrar Formação de Número de Lote",
+        "explicacao": "Define a máscara de formação do número de lote (ano, mês, sequência, etc.).",
+        "proxima_rotina_sugerida": 1694,
+        "dependencias": []
+      },
+      {
+        "codigo": 1618,
+        "nome": "Requisição Manual da Ordem de Produção",
+        "explicacao": "Cria requisição de matérias-primas para uma ordem de produção de forma manual.",
+        "proxima_rotina_sugerida": 1605,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1620,
+        "nome": "Fechar Ordem de Produção",
+        "explicacao": "Encerra uma ordem de produção após a conclusão e entrada do produto acabado.",
+        "proxima_rotina_sugerida": 1624,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1621,
+        "nome": "Rel.Relação do Estoque",
+        "explicacao": "Relatório de estoque de matérias-primas e produtos acabados para a produção.",
+        "proxima_rotina_sugerida": 1625,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1622,
+        "nome": "Administração dos Custos da Produção",
+        "explicacao": "Gerencia e calcula os custos de produção (matéria-prima, mão de obra, indiretos).",
+        "proxima_rotina_sugerida": 1644,
+        "dependencias": [1601]
+      },
+      {
+        "codigo": 1623,
+        "nome": "Emitir Etiqueta de Rastreabilidade",
+        "explicacao": "Emite etiqueta com código de barras para rastreabilidade de lotes e produtos na produção.",
+        "proxima_rotina_sugerida": 1636,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1624,
+        "nome": "Reprocessamento de Produção",
+        "explicacao": "Permite reprocessar um lote ou ordem de produção (retrabalho).",
+        "proxima_rotina_sugerida": 1639,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1625,
+        "nome": "Rel.Entradas de Produto Acabado",
+        "explicacao": "Relatório de entradas de produto acabado por período, ordem de produção e produto.",
+        "proxima_rotina_sugerida": 1626,
+        "dependencias": [1126]
+      },
+      {
+        "codigo": 1626,
+        "nome": "Rel.Sugestão de Compra",
+        "explicacao": "Sugere compra de matérias-primas com base na programação de produção.",
+        "proxima_rotina_sugerida": 1621,
+        "dependencias": [1603]
+      },
+      {
+        "codigo": 1627,
+        "nome": "Manutenção de Ordem de Produção",
+        "explicacao": "Cria, altera e consulta ordens de produção (OP). Define produto, quantidade, data de início/fim, etc.",
+        "proxima_rotina_sugerida": 1675,
+        "dependencias": [1601]
+      },
+      {
+        "codigo": 1628,
+        "nome": "Cadastro de Referência Futura",
+        "explicacao": "Cadastra referências futuras de produção (produtos que serão produzidos em breve).",
+        "proxima_rotina_sugerida": 1618,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1630,
+        "nome": "Lotes do Produto",
+        "explicacao": "Consulta lotes produzidos ou em produção para um determinado produto.",
+        "proxima_rotina_sugerida": 1638,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1632,
+        "nome": "Movimentação Avulsa de Materiais",
+        "explicacao": "Registra movimentação avulsa de materiais (não vinculada a OP) no almoxarifado.",
+        "proxima_rotina_sugerida": 1613,
+        "dependencias": [1117]
+      },
+      {
+        "codigo": 1634,
+        "nome": "Etapas da Produção",
+        "explicacao": "Define as etapas (roteiro) do processo produtivo, incluindo sequência e recursos necessários.",
+        "proxima_rotina_sugerida": 1602,
+        "dependencias": [1601]
+      },
+      {
+        "codigo": 1635,
+        "nome": "Lançar Previsão de Liberação",
+        "explicacao": "Lança previsão de liberação de ordem de produção (data em que a OP ficará disponível).",
+        "proxima_rotina_sugerida": 1627,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1636,
+        "nome": "Rel.Acompanhamento de Produção I",
+        "explicacao": "Relatório básico de acompanhamento de produção (OPs abertas, concluídas, atrasadas).",
+        "proxima_rotina_sugerida": 1648,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1637,
+        "nome": "Gestão à vista de Maquinário/OP",
+        "explicacao": "Painel visual da situação de maquinários e ordens de produção associadas.",
+        "proxima_rotina_sugerida": 1697,
+        "dependencias": [1679]
+      },
+      {
+        "codigo": 1638,
+        "nome": "Rel.Requisições",
+        "explicacao": "Relatório de requisições de matérias-primas para produção.",
+        "proxima_rotina_sugerida": 1641,
+        "dependencias": [1618]
+      },
+      {
+        "codigo": 1639,
+        "nome": "Estornar Apontamento de Produção",
+        "explicacao": "Estorna (cancela) um apontamento de produção lançado incorretamente.",
+        "proxima_rotina_sugerida": 1635,
+        "dependencias": [1646]
+      },
+      {
+        "codigo": 1641,
+        "nome": "Rel.Log Bloqueio e Desbloqueio de Lote",
+        "explicacao": "Relatório de log de bloqueio/desbloqueio de lotes (por qualidade, validade).",
+        "proxima_rotina_sugerida": 1638,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1644,
+        "nome": "Ocorrência de paradas na produção",
+        "explicacao": "Registra ocorrências de paradas de produção (manutenção, falta de material, etc.) e suas causas.",
+        "proxima_rotina_sugerida": 1637,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1645,
+        "nome": "Relatório de eficiência por funcionário",
+        "explicacao": "Relatório de eficiência produtiva por funcionário (tempo produtivo vs. parado).",
+        "proxima_rotina_sugerida": 1655,
+        "dependencias": [1646]
+      },
+      {
+        "codigo": 1646,
+        "nome": "Inspeção Visual do Lote",
+        "explicacao": "Registra inspeção visual de qualidade do lote (aprovação/reprovação).",
+        "proxima_rotina_sugerida": 1647,
+        "dependencias": [1613]
+      },
+      {
+        "codigo": 1647,
+        "nome": "Rel.Movimentações de Mercadoria por Lote",
+        "explicacao": "Relatório de movimentações de estoque (entrada/saída) por lote.",
+        "proxima_rotina_sugerida": 1649,
+        "dependencias": [1610]
+      },
+      {
+        "codigo": 1648,
+        "nome": "Rel.Acompanhamento de Produção II",
+        "explicacao": "Relatório detalhado de acompanhamento de produção (apontamentos, tempos, eficiência).",
+        "proxima_rotina_sugerida": 1641,
+        "dependencias": [1636]
+      },
+      {
+        "codigo": 1649,
+        "nome": "Emissão de Etiqueta por Lote",
+        "explicacao": "Emite etiqueta para lote produzido (código de barras, validade, lote).",
+        "proxima_rotina_sugerida": 1610,
+        "dependencias": [1623]
+      },
+      {
+        "codigo": 1655,
+        "nome": "Rastreabilidade por lote na produção",
+        "explicacao": "Rastreia a utilização de lotes de matérias-primas na produção e o lote de produto acabado gerado.",
+        "proxima_rotina_sugerida": 1645,
+        "dependencias": [1179]
+      },
+      {
+        "codigo": 1665,
+        "nome": "Rel.Movimentações de Ajuste de Estoque",
+        "explicacao": "Relatório de ajustes de estoque realizados no contexto da produção.",
+        "proxima_rotina_sugerida": 1680,
+        "dependencias": [1117]
+      },
+      {
+        "codigo": 1667,
+        "nome": "Aprovar/Reprovar Produtos por Devolução",
+        "explicacao": "Aprova ou reprova produtos devolvidos pelos clientes para reentrada na produção (retrabalho).",
+        "proxima_rotina_sugerida": 1628,
+        "dependencias": [1303]
+      },
+      {
+        "codigo": 1668,
+        "nome": "Sugestão de Produção por Venda",
+        "explicacao": "Sugere ordens de produção com base em vendas realizadas (puxado pela demanda).",
+        "proxima_rotina_sugerida": 1670,
+        "dependencias": [1603, 316]
+      },
+      {
+        "codigo": 1670,
+        "nome": "Cadastrar Recursos de Produção",
+        "explicacao": "Cadastra recursos produtivos (máquinas, equipamentos, ferramentas, pessoas) com suas capacidades.",
+        "proxima_rotina_sugerida": 1671,
+        "dependencias": []
+      },
+      {
+        "codigo": 1671,
+        "nome": "Associação de Estrutura Produtiva",
+        "explicacao": "Associa recursos de produção às etapas do processo produtivo.",
+        "proxima_rotina_sugerida": 1672,
+        "dependencias": [1670, 1634]
+      },
+      {
+        "codigo": 1672,
+        "nome": "Gerenciar Etapas na Produção",
+        "explicacao": "Gerencia as etapas do processo produtivo (sequência, dependências, tempos padrão).",
+        "proxima_rotina_sugerida": 1674,
+        "dependencias": [1634]
+      },
+      {
+        "codigo": 1673,
+        "nome": "Cadastro de Especificações de Análise",
+        "explicacao": "Cadastra especificações de análise de qualidade (parâmetros, limites, métodos).",
+        "proxima_rotina_sugerida": 1613,
+        "dependencias": []
+      },
+      {
+        "codigo": 1674,
+        "nome": "Gráfico de Planejamento de Produção por...",
+        "explicacao": "Exibe gráfico de planejamento de produção por recurso ou período.",
+        "proxima_rotina_sugerida": 1676,
+        "dependencias": [1604]
+      },
+      {
+        "codigo": 1675,
+        "nome": "Cadastro de Produtos Similares",
+        "explicacao": "Cadastra produtos similares para substituição em caso de falta na produção.",
+        "proxima_rotina_sugerida": 1690,
+        "dependencias": [203]
+      },
+      {
+        "codigo": 1676,
+        "nome": "Cadastrar Centro de Custo na Produção",
+        "explicacao": "Associa centros de custo aos recursos e etapas produtivas.",
+        "proxima_rotina_sugerida": 1679,
+        "dependencias": [1670]
+      },
+      {
+        "codigo": 1677,
+        "nome": "Sugestão e Orientação de Produção",
+        "explicacao": "Sugere sequência de produção e orienta o planejador sobre prioridades.",
+        "proxima_rotina_sugerida": 1685,
+        "dependencias": [1668]
+      },
+      {
+        "codigo": 1679,
+        "nome": "Linha de Produção",
+        "explicacao": "Cadastra linhas de produção (ex: Linha A, Linha B) para organização fabril.",
+        "proxima_rotina_sugerida": 1683,
+        "dependencias": []
+      },
+      {
+        "codigo": 1680,
+        "nome": "Movimentação de Estoque na Produção",
+        "explicacao": "Registra movimentações de estoque específicas da produção (consumo, devolução).",
+        "proxima_rotina_sugerida": 1696,
+        "dependencias": [1118]
+      },
+      {
+        "codigo": 1681,
+        "nome": "Mapa de Apuração do Resultado Econômico",
+        "explicacao": "Apura o resultado econômico da produção (custo vs. receita gerada).",
+        "proxima_rotina_sugerida": 1685,
+        "dependencias": [1622]
+      },
+      {
+        "codigo": 1682,
+        "nome": "Agenda de Ocupação de Maquinário",
+        "explicacao": "Exibe agenda de ocupação dos maquinários, auxiliando no planejamento.",
+        "proxima_rotina_sugerida": 1684,
+        "dependencias": [1670]
+      },
+      {
+        "codigo": 1683,
+        "nome": "Painel de Situação de Maquinário",
+        "explicacao": "Painel visual da situação dos maquinários (operando, parado, manutenção).",
+        "proxima_rotina_sugerida": 1686,
+        "dependencias": [1670]
+      },
+      {
+        "codigo": 1684,
+        "nome": "Painel de Operações de Produção",
+        "explicacao": "Painel de controle das operações produtivas em andamento.",
+        "proxima_rotina_sugerida": 1622,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1685,
+        "nome": "Relatório de Produtos por OP",
+        "explicacao": "Relatório de produtos produzidos por ordem de produção.",
+        "proxima_rotina_sugerida": 1681,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1686,
+        "nome": "Análise de custo por Apontamento",
+        "explicacao": "Analisa o custo da produção com base nos apontamentos (tempo, materiais).",
+        "proxima_rotina_sugerida": 1687,
+        "dependencias": [1622]
+      },
+      {
+        "codigo": 1687,
+        "nome": "Gerenciar Insumos da Produção",
+        "explicacao": "Gerencia insumos (matérias-primas, componentes) da produção, incluindo consumo e estoque.",
+        "proxima_rotina_sugerida": 1682,
+        "dependencias": [1601]
+      },
+      {
+        "codigo": 1688,
+        "nome": "Produção Contínua",
+        "explicacao": "Processo produtivo contínuo (fluxo ininterrupto, ex: indústria química).",
+        "proxima_rotina_sugerida": 1623,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1690,
+        "nome": "Gerenciar Produção Empurrada",
+        "explicacao": "Gerencia produção empurrada (make-to-stock) com base em previsões.",
+        "proxima_rotina_sugerida": 1691,
+        "dependencias": [1604]
+      },
+      {
+        "codigo": 1691,
+        "nome": "Gerenciamento de Ordem de Produção",
+        "explicacao": "Gerencia todas as ordens de produção com recursos avançados (análise de capacidade, etc.).",
+        "proxima_rotina_sugerida": 1694,
+        "dependencias": [1627]
+      },
+      {
+        "codigo": 1694,
+        "nome": "Cadastro de processo da produção",
+        "explicacao": "Cadastra processos produtivos (conjunto de etapas e recursos).",
+        "proxima_rotina_sugerida": 1695,
+        "dependencias": [1634]
+      },
+      {
+        "codigo": 1695,
+        "nome": "Relacionar produto ao processo",
+        "explicacao": "Associa um produto acabado a um processo produtivo.",
+        "proxima_rotina_sugerida": 1614,
+        "dependencias": [1694, 1601]
+      },
+      {
+        "codigo": 1696,
+        "nome": "Eficiência de Produção / Ocupação de Máq",
+        "explicacao": "Relatório de eficiência de produção e ocupação de máquinas.",
+        "proxima_rotina_sugerida": 1680,
+        "dependencias": [1645]
+      },
+      {
+        "codigo": 1697,
+        "nome": "Gerenciar Produção por Projeto",
+        "explicacao": "Gerencia produção vinculada a projetos específicos (ex: construção civil, bens de capital).",
+        "proxima_rotina_sugerida": 1637,
+        "dependencias": [1627, 607]
+      },
+      {
+        "codigo": 1744,
+        "nome": "Cadastrar Digital de Usuário",
+        "explicacao": "Cadastra digital (biometria) de usuários para controle de acesso na produção.",
+        "proxima_rotina_sugerida": 1718,
+        "dependencias": [528]
+      }
+    ]
+  }
+}
