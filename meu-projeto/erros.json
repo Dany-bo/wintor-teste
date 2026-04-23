@@ -1,0 +1,55 @@
+{
+  "erros": [
+    {
+      "id": 1,
+      "titulo": "Registro bloqueado - PCFORNEC/PCPRODUT/PCEST",
+      "palavras_chave": ["bloqueado", "PCFORNEC", "PCPRODUT", "PCEST", "registro", "tabela", "lock"],
+      "codigos_rotina_relacionados": [530, 131, 132],
+      "causa": "Outro usuário está editando o mesmo registro ou um processo travou o lock.",
+      "solucao": "1. Aguarde 30 segundos e tente gravar novamente.\n2. Verifique outros usuários logados (rotina 528).\n3. Caso necessário, reinicie o serviço WinThor.\n4. Contate o DBA para identificar e matar o lock.",
+      "nota_para_ti": "Consultar v$locked_object no Oracle ou pg_locks no PostgreSQL.",
+      "proximo_passo_sugerido": "Executar rotina 530 para revisar permissões."
+    },
+    {
+      "id": 2,
+      "titulo": "Erro de objeto inválido no banco",
+      "palavras_chave": ["objeto inválido", "package inválido", "compilação", "invalid", "WTA"],
+      "codigos_rotina_relacionados": [500, 560, 801, 814],
+      "causa": "Procedure, função ou view está inválida.",
+      "solucao": "1. Execute 814 (Atualização de objeto de BD).\n2. Execute 500 (Atualizar Procedure).\n3. Execute 560 (Atualizar Banco de Dados).\n4. Se erro persistir, recompile manualmente.",
+      "nota_para_ti": "Script: `SELECT object_name, status FROM all_objects WHERE status = 'INVALID';`",
+      "proximo_passo_sugerido": "Rodar 801 (Atualização de Serviços Web)."
+    },
+    {
+      "id": 3,
+      "titulo": "Erro na rotina 2075 (Frente de Caixa)",
+      "palavras_chave": ["2075", "frente de caixa", "PDV", "sangria", "suprimento", "caixa"],
+      "codigos_rotina_relacionados": [2075, 2030, 2036],
+      "causa": "Operação de caixa não finalizada, falta de permissão ou estoque inconsistente.",
+      "solucao": "1. Verifique se o operador tem permissão (rotina 530).\n2. Execute sangria/suprimento (2036).\n3. Reabra o caixa (2030).\n4. Se erro persistir, reinicie o serviço.",
+      "nota_para_ti": "Validar integridade da tabela PCCTAX e PCFECH.",
+      "proximo_passo_sugerido": "Verificar rotina 418 (Fechamento caixa balcão)."
+    },
+    {
+      "id": 4,
+      "titulo": "Erro de conexão com SEFAZ (NF-e)",
+      "palavras_chave": ["SEFAZ", "NF-e", "contingência", "autorização", "certificado", "SSL"],
+      "codigos_rotina_relacionados": [1402, 1455, 1456],
+      "causa": "Certificado vencido, rede bloqueada ou SEFAZ offline.",
+      "solucao": "1. Verifique certificado digital (rotina 1162).\n2. Teste conectividade com SEFAZ.\n3. Ative contingência (rotina 1455).\n4. Reinicie o serviço de emissão.",
+      "nota_para_ti": "Monitorar cronograma SEFAZ e renovar certificado A1/A3.",
+      "proximo_passo_sugerido": "Executar 1456 (Inutilizar numeração) se necessário."
+    },
+    {
+      "id": 5,
+      "titulo": "Erro de permissão (rotina 530)",
+      "palavras_chave": ["permissão", "acesso negado", "não autorizado", "530"],
+      "codigos_rotina_relacionados": [530, 131, 132],
+      "causa": "Usuário não possui permissão para executar determinada rotina.",
+      "solucao": "1. Solicite ao supervisor acesso via rotina 530.\n2. Verifique perfil de usuário (rotina 599).\n3. Consulte log de permissões (rotina 537).",
+      "nota_para_ti": "Revisar grupos de acesso e políticas de segurança.",
+      "proximo_passo_sugerido": "Executar 537 para listar permissões atuais."
+    }
+  ]
+}
+ 
