@@ -1,0 +1,88 @@
+{
+  "tutoriais": [
+    {
+      "rotina": 1452,
+      "titulo": "Emitir Documento Fiscal Eletrônico (NF-e)",
+      "descricao_curta": "Como emitir uma NF-e já autorizada pela SEFAZ",
+      "passo_a_passo": [
+        "Acesse o menu: Faturamento > Documento Fiscal > Emitir documento fiscal eletrônico",
+        "Na tela principal, informe o número da nota fiscal que deseja emitir",
+        "Verifique se todos os dados do destinatário estão corretos (CNPJ, endereço)",
+        "Confira os valores dos impostos (ICMS, IPI, etc.)",
+        "Clique no botão 'Emitir' ou pressione F8",
+        "O sistema vai gerar o arquivo XML da NF-e",
+        "Se aparecer algum erro, anote o código e me pergunte novamente"
+      ],
+      "dicas": [
+        "Antes de emitir, verifique se o certificado digital está válido na rotina 1162",
+        "Se a SEFAZ estiver fora do ar, use a contingência na rotina 1455",
+        "A DANFE (versão impressa) pode ser gerada depois na rotina 1456"
+      ],
+      "termos_busca": ["danfe", "emitir nota", "nf-e", "nota fiscal eletrônica", "como emitir", "xml", "danfe impressão"]
+      
+    },
+    {
+      "rotina": 220,
+      "titulo": "Digitar Pedido de Compra",
+      "descricao_curta": "Como criar um novo pedido de compra passo a passo",
+      "passo_a_passo": [
+        "Acesse: Compras > Pedido > Digitar pedido de compra",
+        "Na tela que abre, informe o código do fornecedor (ou pesquise pelo nome)",
+        "Preencha a condição de pagamento (à vista, parcelado, etc.)",
+        "Na grade de produtos, informe o código do produto e a quantidade",
+        "Confira o preço unitário e o total",
+        "Após digitar todos os itens, clique em 'Gravar' (F10)",
+        "O sistema vai gerar um número de pedido automaticamente"
+      ],
+      "dicas": [
+        "O fornecedor precisa estar cadastrado (rotina 202)",
+        "O produto precisa estar cadastrado (rotina 203)",
+        "Para imprimir o pedido depois, use a rotina 210"
+      ],
+      "termos_busca": ["pedido de compra", "como comprar", "digitar pedido", "gerar pedido", "fazer pedido"]
+    },
+    {
+      "rotina": 210,
+      "titulo": "Emitir Pedido de Compra",
+      "descricao_curta": "Como imprimir/gerar PDF do pedido de compra",
+      "passo_a_passo": [
+        "Acesse: Compras > Pedido > Emitir pedido de compra",
+        "Informe o número do pedido que deseja emitir",
+        "Selecione o formato de saída (PDF, impressora, etc.)",
+        "Clique em 'Emitir'"
+      ],
+      "dicas": [
+        "O pedido precisa ter sido digitado antes (rotina 220)",
+        "Verifique se os dados do fornecedor estão completos"
+      ],
+      "termos_busca": ["emitir pedido", "imprimir pedido", "pdf pedido", "gerar pdf compra"]
+    },
+    {
+ "rotina": 1452,
+  "titulo": "Emitir Documento Fiscal Eletrônico (NF-e)",
+  "descricao_curta": "Como emitir uma NF-e já autorizada pela SEFAZ",
+  "passo_a_passo": [
+    "Acesse o menu: Faturamento > Documento Fiscal > Emitir documento fiscal eletrônico",
+    "Na tela principal, informe o número da nota fiscal que deseja emitir",
+    "Verifique se todos os dados do destinatário estão corretos (CNPJ, endereço)",
+    "Confira os valores dos impostos (ICMS, IPI, etc.)",
+    "Clique no botão 'Emitir' ou pressione F8",
+    "O sistema vai gerar o arquivo XML da NF-e",
+    "Se aparecer algum erro, anote o código e me pergunte novamente"
+  ],
+  "dicas": [
+    "Antes de emitir, verifique se o certificado digital está válido na rotina 1162",
+    "Se a SEFAZ estiver fora do ar, use a contingência na rotina 1455",
+    "A DANFE (versão impressa) pode ser gerada depois na rotina 1456",
+    "Para verificar se a nota foi aprovada, consulte o status na rotina 1452 ou no portal da SEFAZ",
+    "Notas aprovadas aparecem com status 'Autorizada' no sistema"
+  ],
+  "termos_busca": ["danfe", "emitir nota", "nf-e", "nota fiscal eletrônica", "como emitir", "xml", "danfe impressão", "nota aprovada", "status nota"]
+    }
+  ]
+}
+
+
+
+
+ 
