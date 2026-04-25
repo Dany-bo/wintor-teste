@@ -1,10 +1,82 @@
+Anotações de Ideias
+
+
+
+
 licença experimental de uma semana
 
+--------//-----------------------//------------------------
+
+- Adicionar escritas chat conversa como abreviações, gírias de internet ou popularmente de "internetês". Elas funcionam como um sistema rápido e informal de comunicação escrita, muito comum em chats, redes sociais e WhatsApp. 
+Aqui está o que significam:
+VC: Você
+VLW: Valeu (utilizado para agradecer ou como um "tchau", "falou")
+BLZ: Beleza (utilizado para concordar, dizer "ok", ou perguntar "tudo bem?") 
+Como funciona?
+O objetivo é aumentar a velocidade da digitação, removendo vogais ou reduzindo palavras longas a poucas letras. Outros exemplos comuns mencionados são: 
+Tbm / tb: Também
+Pq: Porque/Por que
+Ndd / nd: Nada
+Fds: Final de semana
+Sdds: Saudades
+Kkkk: Riso
+
+--------//-----------------------//------------------------
+
+- Tirar a primeira frase, deixar somente o texto, para que o cliente se sinta a vontade, somente o chat com explicações. Porque nesse exemplo do chat: 📂 **Digitar Pedido de Compra**
+📝 _Como criar um novo pedido de compra passo a passo_
+
+Rotina 220 é a rotina para digitar o pedido de compra, conforme você mencionou nos dados da rotina. É nela que você informa os detalhes do fornecedor, condição de pagamento e lista dos produtos com suas quantidades. Depois de gravar, o sistema gera automaticamente um número de pedido.
+
+💡 Quer o passo a passo completo? Peça 'me ensina o passo a passo'! 😊
+
+Até ai tudo bem, mas queria que não viesse com: 📂 **Digitar Pedido de Compra** 📝 _Como criar um novo pedido de compra passo a passo_
+Só tirar esse detalhe quando o chat começa relacionar as rotinas. e também se precisar mecher em algum arquivo Json e ajustar isso, pra que nao fique sobras de script, assim otimizando todo o projeto
+
+OK
+
+--------//-----------------------//------------------------
+
+- Adicionar relação entre as tabelas de banco de uma base zearada e rotinas para melhor forma de explicação no processo. podemos também adicionar um Json somente das tabelas do winthor, para que a ia aprenda e facilite a resposta para o cliente? o bjetivo é que a ia busque também conhecinemento na internet sobre as duvidas
+
+--------//-----------------------//------------------------
+
+- após a relação entre as tabelas, o ideal agora é a ia também aprender o WTA do winthor. porque quando aparecer alguma dependencia para atualizar em qualquer rotina la no WTA, quero que explique qual a depencencia precisa atualizar mesmo que geralmente a rotina mostra o que atualizar mas não mostra o caminho. então se a pessoa subir uma imagem ou colar no chat, o chat tem que pegar alguns dados da internet e unir as tabelas existentes e exlpicar qual a dependencia no WTA que precisa atualizar, dependendo também da versão da release do winthor, v35,v36,v37,v38 ETC.....
+
+--------//-----------------------//------------------------
+
+Mandei a foto e expliquei qual atualização da rotina podia ser e ele disse uma resposta crua que nao tinha. como se tivesse me cortado, queria que ele me perguntasse fosse mais ingeligente. tipo qual rotina você esta usando? na foto não consegui visualisar. (exemplo na foto estava pedindo atualização Winthor-fiscal para abrir a 1452. mesmo não mostrando a 1452 tinha alguma dependencia pra atualizar, o chat não conseguiu visualizar nem a dependencia pra atualizar pra abrir a rotina, isso é basico de dependencias do WTA. 
+Usuário
+Me deu um erro, aqui na rotina, ta pedindo alguma coisa pra atualizar em tabelas de banco, conforme a imagem, ela nao abre so fica pedindo essa atualização o que fazer?
+
+Assistente IA
+🤔 Rotina 404 não encontrada.
+
+Rotinas próximas: 401, 403, 406, 407
+
+--------//-----------------------//------------------------
+
+o chat poderia buscar informações na internet e unir com o que temos de modulos e erros aqui. caso esteja faltando uma rotina
+
+--------//-----------------------//------------------------
+
+Fazer com que ele le certo a imagem do erro e relacione com os modulos e responda para a pessoa o que tem a ver com a imagem de onde vem esse erro (fazer uma busca direta na internet) e dar o caminho para resolver o erro
+Jogar a imagem e ele interpretar independente da fala. analizar o erro dar respostas objetivas. que fazer? qual passo a passo para resolver?
+
+--------//-----------------------//------------------------
+
+Adicionar mais erros no erros_wintor.json
+
+Adicionar mais tutoriais no tutoriais_rotinas.json
+
+Adicionar mais fluxos no fluxo_rotinas.json
+
+Melhorar respostas para erros específicos do WinThor
+
+------------------//----------------------//--------------
 
 
 
-🤖 Assistente WinThor:
-model='qwen2.5:14b' created_at='2026-04-16T01:48:41.7833119Z' done=True done_reason='stop' total_duration=1651803900 load_duration=90456000 prompt_eval_count=244 prompt_eval_duration=129192000 eval_count=50 eval_duration=1392840600 response='Não sei a resposta para essa pergunta específica. Sugiro verificar o número da rotina ou fornecer mais detalhes sobre o que você está tentando fazer com relação ao sistema WinThor, usando as informações das rotinas mencionadas.' thinking=None context=[151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 69286, 3958, 297, 7789, 6817, 32297, 9087, 902, 28828, 12190, 97652, 624, 1061, 618, 3235, 409, 21791, 1185, 5059, 11, 13207, 2565, 384, 5810, 11, 57141, 10106, 953, 1911, 438, 64066, 88792, 624, 1514, 264, 817, 59910, 12393, 281, 32619, 1420, 5889, 4744, 469, 297, 76743, 11, 4078, 64, 1709, 12393, 75294, 384, 30605, 8832, 6051, 277, 297, 30211, 2994, 5749, 2210, 382, 5790, 25192, 5207, 1447, 44, 20511, 8763, 25, 51437, 64268, 46, 198, 36936, 2210, 25, 220, 23, 16, 19, 481, 2411, 928, 47376, 409, 35543, 409, 52465, 409, 27945, 198, 8033, 415, 12967, 25, 2411, 928, 17090, 74048, 409, 52465, 320, 5072, 11, 5746, 11, 30754, 4292, 3533, 1794, 56492, 5749, 2210, 97584, 4744, 25, 220, 23, 23, 15, 198, 7839, 408, 63809, 25, 220, 20, 15, 15, 1022, 44, 20511, 8763, 25, 13460, 23114, 74634, 198, 36936, 2210, 25, 220, 24, 20, 18, 481, 5027, 64, 409, 4836, 12967, 198, 8033, 415, 12967, 25, 24209, 3413, 93060, 3413, 653, 68110, 409, 4836, 12967, 409, 10477, 13349, 624, 3533, 1794, 56492, 5749, 2210, 97584, 4744, 25, 220, 24, 15, 23, 198, 7839, 408, 63809, 25, 220, 24, 15, 16, 1406, 9654, 38, 1861, 15204, 9319, 2274, 52, 43701, 49, 3810, 25, 220, 16, 15, 24, 20, 15, 271, 7012, 2946, 32, 25, 151645, 198, 151644, 77091, 198, 50799, 42137, 264, 74506, 3348, 54629, 817, 59910, 141033, 13, 83767, 8698, 91819, 297, 30211, 2994, 5749, 2210, 5908, 56009, 93118, 9870, 52152, 16668, 15131, 297, 1709, 24709, 15466, 15632, 4883, 39845, 469, 96103, 14845, 28828, 12190, 97652, 11, 57141, 438, 64066, 6616, 5749, 20114, 51518, 290, 11107, 13] logprobs=None
 
 
-baixar banco de dados
+
